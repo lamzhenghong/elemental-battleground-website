@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { SiteNavigation } from './components/SiteNavigation';
 import { SkipLink } from './components/SkipLink';
+import { CombatSection } from './sections/Combat/CombatSection';
 import { OpeningSection } from './sections/Opening/OpeningSection';
+import { ReactionsSection } from './sections/Reactions/ReactionsSection';
 import { WorldSection } from './sections/World/WorldSection';
 
 const upcomingChapters = [
-  { id: 'combat', index: '02', title: 'Combat Without Hesitation' },
   { id: 'heroes', index: '04', title: 'Four Limited Legends' },
   { id: 'special-ultimates', index: '05', title: 'Special Ultimates' },
   { id: 'modes', index: '06', title: 'Choose the Trial' },
@@ -23,6 +24,8 @@ export function App() {
       <main id="main-content">
         <OpeningSection />
         <WorldSection />
+        <CombatSection />
+        <ReactionsSection />
         {upcomingChapters.map(chapter => (
           <section id={chapter.id} className="chapter-placeholder" key={chapter.id}>
             <p>{chapter.index} / Transmission forming</p>
