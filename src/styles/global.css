@@ -2215,7 +2215,7 @@ canvas {
   }
 
   .hero-roster {
-    grid-template-columns: 38px repeat(4, minmax(58px, 1fr)) 38px;
+    grid-template-columns: 40px repeat(4, minmax(58px, 1fr)) 40px;
     gap: 5px;
   }
 
