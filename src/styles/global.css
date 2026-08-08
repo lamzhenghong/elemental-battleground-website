@@ -1364,7 +1364,8 @@ canvas {
   }
 
   .opening-title {
-    font-size: clamp(52px, 18vw, 78px);
+    max-width: 100%;
+    font-size: clamp(48px, 16vw, 70px);
     line-height: 0.82;
   }
 
@@ -1373,7 +1374,7 @@ canvas {
   }
 
   .opening-copy {
-    max-width: 330px;
+    max-width: min(330px, 100%);
     margin-top: 24px;
   }
 
