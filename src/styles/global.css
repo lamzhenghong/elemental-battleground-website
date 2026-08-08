@@ -688,6 +688,8 @@ canvas {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-height: 40px;
+  padding-inline: 10px;
   border: 0;
   background: transparent;
   color: var(--mist-400);

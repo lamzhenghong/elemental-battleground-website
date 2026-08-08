@@ -51,7 +51,7 @@ export function HeroesSection() {
 
           <article className="hero-scene-copy" aria-live="polite">
             <div className="hero-meta">
-              <span>{'5'.repeat(hero.rarity)} star</span>
+              <span>{hero.rarity}-star limited</span>
               <span>{hero.element}</span>
               <span>{hero.weapon}</span>
               <span>{hero.role}</span>
