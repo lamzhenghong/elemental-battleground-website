@@ -4,7 +4,7 @@ import { SITE_LINKS } from '../../content/siteContent';
 export function FinalCTASection() {
   return (
     <section id="play" className="final-cta-section" aria-labelledby="final-title">
-      <img src="/media/images/opening/main-menu-poster.webp" alt="The elemental portal of Aetheria" loading="lazy" />
+      <img src="/media/images/brand/portal.webp" alt="The elemental portal of Aetheria" loading="lazy" />
       <div className="final-cta-shade" aria-hidden="true" />
       <div className="page-shell final-cta-copy">
         <p className="chapter-index">10 / The gate reopens</p>

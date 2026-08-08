@@ -11,7 +11,7 @@ Build a separate, public promotional website that introduces Elemental Battlegro
 
 - The project lives in `elemental-battleground-website`, outside the game repository.
 - The public name is always **Elemental Battleground**.
-- The browser title is `Elemental Battleground - Official Game Website`.
+- The browser title is `Elemental Battleground — Official Game Website`.
 - The real game remains unchanged and is linked at `https://elemental-battleground.vercel.app/`.
 - The official source link is `https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND`.
 - No trailer or social links are invented. Unavailable actions are rendered as clearly labeled `Coming soon` controls rather than dead links.
@@ -157,4 +157,3 @@ The composition uses dark navy and black as a stage, cyan and gold as brand anch
 - No invented trailer, community, or social account.
 - No heavy always-on Three.js scene.
 - No claim that the system visualization is captured gameplay.
-

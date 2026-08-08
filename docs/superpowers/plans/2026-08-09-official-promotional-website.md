@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - Public name: `Elemental Battleground`.
-- Browser title: `Elemental Battleground - Official Game Website`.
+- Browser title: `Elemental Battleground — Official Game Website`.
 - Package, repository, project, and folder name: `elemental-battleground-website`.
 - The existing game repository is read-only and must remain unchanged.
 - Audio is muted until explicit user interaction.
@@ -242,4 +242,3 @@ expect(getReactionPresentation('vaporize').multiplierLabel).toBe('2.0x');
 - [ ] **Step 5: Verify HTTPS, title, favicon, opening, media, navigation, controls, direct refresh, mobile/tablet/desktop layouts, metadata, console, and required network requests**
 - [ ] **Step 6: If the production alias differs, update canonical/sitemap metadata, rebuild, commit, push, and reverify**
 - [ ] **Step 7: Record final URLs, commit SHA, deployment state, and honest test limitations in the final report**
-

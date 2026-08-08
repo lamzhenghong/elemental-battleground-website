@@ -1,8 +1,17 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
-afterEach(() => cleanup());
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
+
+Object.defineProperties(window.HTMLMediaElement.prototype, {
+  play: { configurable: true, value: () => Promise.resolve() },
+  pause: { configurable: true, value: () => undefined },
+  load: { configurable: true, value: () => undefined }
+});
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
