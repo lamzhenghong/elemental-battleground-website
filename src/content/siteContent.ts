@@ -77,6 +77,7 @@ export const SPECIAL_ULTIMATES: readonly SpecialUltimateFeature[] = [
 
 export const PROGRESSION_LAYERS = [
   { id: 'heroes', label: 'Ascend heroes', detail: 'Raise levels, unlock Ascension, and sharpen each combat identity.' },
+  { id: 'summons', label: 'Summon new allies', detail: 'Meet new heroes and weapons through limited and standard banners with visible pity progress.' },
   { id: 'artifacts', label: 'Shape artifact sets', detail: 'Build around main stats, substats, and meaningful two- or four-piece effects.' },
   { id: 'forge', label: 'Forge the loadout', detail: 'Improve weapons, manage materials, and assign every armament with intent.' },
   { id: 'team', label: 'Compose the reaction', detail: 'Create four-hero rotations that turn element order into battlefield control.' },

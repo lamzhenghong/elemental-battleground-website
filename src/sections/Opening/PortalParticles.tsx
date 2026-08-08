@@ -27,6 +27,9 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
     let height = 0;
     let frame = 0;
     let particles: Particle[] = [];
+    let inView = true;
+    let pageVisible = !document.hidden;
+    let disposed = false;
 
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -47,7 +50,15 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
       }));
     };
 
+    const stop = () => {
+      if (!frame) return;
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    };
+
     const draw = () => {
+      frame = 0;
+      if (disposed || !inView || !pageVisible) return;
       context.clearRect(0, 0, width, height);
       for (const particle of particles) {
         particle.y -= particle.velocity;
@@ -65,12 +76,35 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
       frame = window.requestAnimationFrame(draw);
     };
 
+    const start = () => {
+      if (!frame && !disposed && inView && pageVisible) frame = window.requestAnimationFrame(draw);
+    };
+
+    const handleVisibility = () => {
+      pageVisible = !document.hidden;
+      if (pageVisible) start();
+      else stop();
+    };
+
+    const observer = typeof IntersectionObserver === 'undefined'
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          inView = entry?.isIntersecting ?? false;
+          if (inView) start();
+          else stop();
+        }, { rootMargin: '120px 0px' });
+
     resize();
     window.addEventListener('resize', resize, { passive: true });
-    frame = window.requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', handleVisibility);
+    observer?.observe(canvas);
+    start();
     return () => {
-      window.cancelAnimationFrame(frame);
+      disposed = true;
+      stop();
+      observer?.disconnect();
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, [disabled]);
 

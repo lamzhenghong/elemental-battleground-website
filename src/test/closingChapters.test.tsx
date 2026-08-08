@@ -20,6 +20,8 @@ describe('closing chapters', () => {
   it('reveals progression details without showing a stats table', () => {
     render(<ProgressionSection />);
 
+    fireEvent.click(screen.getByRole('button', { name: 'Summon new allies' }));
+    expect(screen.getByText(/limited and standard banners/i)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Shape artifact sets' }));
     expect(screen.getByText(/main stats, substats/i)).toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();

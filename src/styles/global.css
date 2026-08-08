@@ -609,11 +609,28 @@ canvas {
 
 .media-fallback > span {
   position: absolute;
-  inset: auto 16px 16px;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
   color: var(--mist-400);
   font-family: var(--mono);
   font-size: 9px;
+  letter-spacing: 0.14em;
+  text-align: center;
   text-transform: uppercase;
+}
+
+.opening-primary-media,
+.world-frame-media,
+.hero-primary-media,
+.mode-backdrop-media,
+.final-cta-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 .combat-section {
@@ -2624,11 +2641,12 @@ canvas {
   font: 700 11px/1.32 var(--body);
 }
 
-.progression-path button:nth-child(1) { top: 5%; left: 50%; transform: translateX(-50%); }
-.progression-path button:nth-child(2) { top: 28%; right: 7%; }
-.progression-path button:nth-child(3) { right: 19%; bottom: 8%; }
-.progression-path button:nth-child(4) { bottom: 8%; left: 19%; }
-.progression-path button:nth-child(5) { top: 28%; left: 7%; }
+.progression-path button:nth-child(1) { top: 4%; left: 50%; transform: translateX(-50%); }
+.progression-path button:nth-child(2) { top: 22%; right: 8%; }
+.progression-path button:nth-child(3) { right: 14%; bottom: 10%; }
+.progression-path button:nth-child(4) { bottom: 4%; left: 50%; transform: translateX(-50%); }
+.progression-path button:nth-child(5) { bottom: 10%; left: 14%; }
+.progression-path button:nth-child(6) { top: 22%; left: 8%; }
 
 .soundtrack-section {
   position: relative;
@@ -2843,7 +2861,7 @@ canvas {
   background: #03050a;
 }
 
-.final-cta-section > img,
+.final-cta-media,
 .final-cta-shade {
   position: absolute;
   inset: 0;
@@ -2851,7 +2869,9 @@ canvas {
   height: 100%;
 }
 
-.final-cta-section > img {
+.final-cta-media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   filter: saturate(0.92) brightness(0.72);
   animation: final-gate 12s ease-in-out infinite alternate;
@@ -2971,7 +2991,7 @@ canvas {
   }
 
   .progression-path button:nth-child(2) { right: 1%; }
-  .progression-path button:nth-child(5) { left: 1%; }
+  .progression-path button:nth-child(6) { left: 1%; }
 
   .sound-console {
     grid-template-columns: 1fr;
@@ -3084,7 +3104,7 @@ canvas {
 
   .progression-path {
     display: grid;
-    grid-template-columns: repeat(5, minmax(62px, 1fr));
+    grid-template-columns: repeat(6, minmax(62px, 1fr));
     gap: 5px;
     overflow-x: auto;
     scrollbar-width: none;
@@ -3171,6 +3191,17 @@ canvas {
   .site-footer p {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-roster {
+    grid-template-columns: 40px repeat(4, minmax(44px, 1fr)) 40px;
+    gap: 3px;
+  }
+
+  .hero-roster img {
+    height: 42px;
   }
 }
 

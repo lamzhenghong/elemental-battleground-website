@@ -1,8 +1,8 @@
-import { Anvil, Layers3, ShieldPlus, Sparkles, UsersRound } from 'lucide-react';
+import { Anvil, Layers3, Orbit, ShieldPlus, Sparkles, UsersRound } from 'lucide-react';
 import { useState } from 'react';
 import { PROGRESSION_LAYERS } from '../../content/siteContent';
 
-const ICONS = [ShieldPlus, Layers3, Anvil, UsersRound, Sparkles] as const;
+const ICONS = [ShieldPlus, Orbit, Layers3, Anvil, UsersRound, Sparkles] as const;
 
 export function ProgressionSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -14,7 +14,7 @@ export function ProgressionSection() {
         <header>
           <p className="chapter-index">07 / Build your answer</p>
           <h2 id="progression-title">Power is not found. It is composed.</h2>
-          <p>Five connected choices shape how a party moves, reacts, survives, and finishes a fight.</p>
+          <p>Six connected choices shape who joins the party and how every hero moves, reacts, survives, and finishes a fight.</p>
         </header>
 
         <div className="progression-orbit">

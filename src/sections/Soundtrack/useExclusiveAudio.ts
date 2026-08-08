@@ -8,6 +8,7 @@ export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.65);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -18,7 +19,12 @@ export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (!soundEnabled || !playing) {
+    if (!soundEnabled) {
+      audio.pause();
+      setPlaying(false);
+      return;
+    }
+    if (!playing) {
       audio.pause();
       return;
     }
@@ -42,6 +48,7 @@ export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (
   }, [playing, soundEnabled]);
 
   const toggleTrack = (index: number) => {
+    setHasInteracted(true);
     if (!soundEnabled) onSoundEnabledChange(true);
     if (selectedIndex === index && playing) setPlaying(false);
     else {
@@ -62,6 +69,7 @@ export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (
     selected: SOUNDTRACK[selectedIndex],
     selectedIndex,
     playing,
+    hasInteracted,
     currentTime,
     duration,
     volume,

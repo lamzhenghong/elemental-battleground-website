@@ -15,7 +15,6 @@ const keyActions: Record<string, CombatAction> = {
   j: 'attack',
   ' ': 'dash',
   c: 'parry',
-  Tab: 'switch',
   e: 'skill',
   q: 'burst'
 };
@@ -25,6 +24,7 @@ export function CombatSimulator() {
   const activeHero = COMBAT_HEROES[state.activeHeroIndex];
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget) return;
     const action = keyActions[event.key] ?? keyActions[event.key.toLowerCase()];
     if (!action) return;
     event.preventDefault();

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { WORLD_CHAPTERS } from '../../content/siteContent';
 import { useGsapContext } from '../../hooks/useGsapContext';
 import { useReducedExperience } from '../../hooks/useReducedExperience';
+import { MediaFallback } from '../../components/MediaFallback';
 
 export function WorldSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -40,10 +41,19 @@ export function WorldSection() {
       <div className="world-frames page-shell">
         {WORLD_CHAPTERS.map((chapter, index) => (
           <article className="world-frame" key={chapter.title}>
-            <picture>
-              <source media="(max-width: 720px)" srcSet={chapter.image.replace('.webp', '-960.webp')} />
-              <img src={chapter.image} alt={`Elemental Battleground environment: ${chapter.eyebrow}`} loading="lazy" />
-            </picture>
+            <MediaFallback className="world-frame-media" message={`${chapter.eyebrow} visual unavailable`}>
+              {onError => (
+                <picture>
+                  <source media="(max-width: 720px)" srcSet={chapter.image.replace('.webp', '-960.webp')} />
+                  <img
+                    src={chapter.image}
+                    alt={`Elemental Battleground environment: ${chapter.eyebrow}`}
+                    loading="lazy"
+                    onError={onError}
+                  />
+                </picture>
+              )}
+            </MediaFallback>
             <div className="world-frame-shade" aria-hidden="true" />
             <div className="world-frame-copy">
               <span>{String(index + 1).padStart(2, '0')}</span>

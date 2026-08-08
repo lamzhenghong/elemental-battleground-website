@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { SITE_LINKS } from '../../content/siteContent';
 import { useGsapContext } from '../../hooks/useGsapContext';
 import { useReducedExperience } from '../../hooks/useReducedExperience';
+import { MediaFallback } from '../../components/MediaFallback';
 import { PortalParticles } from './PortalParticles';
 
 export function OpeningSection() {
@@ -28,20 +29,23 @@ export function OpeningSection() {
   return (
     <section id="overview" ref={sectionRef} className="opening-section" aria-labelledby="opening-title">
       <div className="opening-media" aria-hidden="true">
-        {!reducedData ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/media/images/brand/portal.webp"
-          >
-            <source src="/media/video/portal-loop.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          <img src="/media/images/brand/portal.webp" alt="" />
-        )}
+        <MediaFallback className="opening-primary-media" message="Portal visual unavailable">
+          {onError => !reducedData ? (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/media/images/brand/portal.webp"
+              onError={onError}
+            >
+              <source src="/media/video/portal-loop.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            <img src="/media/images/brand/portal.webp" alt="" onError={onError} />
+          )}
+        </MediaFallback>
         <div className="opening-vignette" />
       </div>
       <PortalParticles disabled={effectsReduced || coarsePointer} />

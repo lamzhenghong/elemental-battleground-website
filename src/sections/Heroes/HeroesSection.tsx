@@ -3,6 +3,7 @@ import { useRef, useState, type CSSProperties } from 'react';
 import { HEROES } from '../../content/heroes';
 import { useGsapContext } from '../../hooks/useGsapContext';
 import { useReducedExperience } from '../../hooks/useReducedExperience';
+import { MediaFallback } from '../../components/MediaFallback';
 
 export function HeroesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -44,8 +45,14 @@ export function HeroesSection() {
 
         <div className="hero-stage">
           <div className="hero-visual" aria-hidden="true">
-            <img className="hero-environment" src={hero.environment} alt="" loading="lazy" />
-            <img className="hero-portrait" src={hero.image} alt="" loading="lazy" />
+            <MediaFallback className="hero-primary-media" message={`${hero.name} visual unavailable`}>
+              {onError => (
+                <>
+                  <img className="hero-environment" src={hero.environment} alt="" loading="lazy" onError={onError} />
+                  <img className="hero-portrait" src={hero.image} alt="" loading="lazy" onError={onError} />
+                </>
+              )}
+            </MediaFallback>
             <span className="hero-element-mark">{hero.element}</span>
           </div>
 

@@ -1,10 +1,20 @@
 import { ArrowUpRight, Gamepad2, Github, Play } from 'lucide-react';
 import { SITE_LINKS } from '../../content/siteContent';
+import { MediaFallback } from '../../components/MediaFallback';
 
 export function FinalCTASection() {
   return (
     <section id="play" className="final-cta-section" aria-labelledby="final-title">
-      <img src="/media/images/brand/portal.webp" alt="The elemental portal of Aetheria" loading="lazy" />
+      <MediaFallback className="final-cta-media" message="The elemental gate visual is unavailable">
+        {onError => (
+          <img
+            src="/media/images/brand/portal.webp"
+            alt="The elemental portal of Aetheria"
+            loading="lazy"
+            onError={onError}
+          />
+        )}
+      </MediaFallback>
       <div className="final-cta-shade" aria-hidden="true" />
       <div className="page-shell final-cta-copy">
         <p className="chapter-index">10 / The gate reopens</p>

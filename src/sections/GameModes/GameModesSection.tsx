@@ -1,6 +1,7 @@
 import { ArrowUpRight, Compass } from 'lucide-react';
 import { useState, type CSSProperties } from 'react';
 import { GAME_MODES } from '../../content/gameModes';
+import { MediaFallback } from '../../components/MediaFallback';
 
 export function GameModesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -13,7 +14,9 @@ export function GameModesSection() {
       aria-labelledby="modes-title"
       style={{ '--mode-accent': mode.accent } as CSSProperties}
     >
-      <img className="mode-backdrop" src={mode.image} alt="" loading="lazy" />
+      <MediaFallback className="mode-backdrop-media" message={`${mode.name} visual unavailable`}>
+        {onError => <img className="mode-backdrop" src={mode.image} alt="" loading="lazy" onError={onError} />}
+      </MediaFallback>
       <div className="mode-shade" aria-hidden="true" />
       <div className="page-shell modes-shell">
         <header>

@@ -40,7 +40,7 @@ export function SoundtrackSection({ soundEnabled, onSoundEnabledChange }: Soundt
             <button
               type="button"
               className="sound-main-control"
-              aria-label={`${player.playing ? 'Pause' : 'Play'} selected track ${player.selected.name}`}
+              aria-label={`${player.playing && soundEnabled ? 'Pause' : 'Play'} selected track ${player.selected.name}`}
               onClick={() => player.toggleTrack(player.selectedIndex)}
             >
               {player.playing && soundEnabled ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
@@ -83,7 +83,7 @@ export function SoundtrackSection({ soundEnabled, onSoundEnabledChange }: Soundt
                 type="button"
                 key={track.id}
                 className={index === player.selectedIndex ? 'is-active' : ''}
-                aria-label={`${player.playing && index === player.selectedIndex ? 'Pause' : 'Play'} ${track.name}`}
+                aria-label={`${player.playing && soundEnabled && index === player.selectedIndex ? 'Pause' : 'Play'} ${track.name}`}
                 aria-pressed={index === player.selectedIndex}
                 onClick={() => player.toggleTrack(index)}
               >
@@ -96,8 +96,8 @@ export function SoundtrackSection({ soundEnabled, onSoundEnabledChange }: Soundt
 
           <audio
             ref={player.audioRef}
-            src={player.selected.src}
-            preload="metadata"
+            src={player.hasInteracted ? player.selected.src : undefined}
+            preload="none"
             onLoadedMetadata={event => player.setDuration(event.currentTarget.duration)}
             onTimeUpdate={event => player.setCurrentTime(event.currentTarget.currentTime)}
             onEnded={() => player.setPlaying(false)}
