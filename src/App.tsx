@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { SiteNavigation } from './components/SiteNavigation';
+import { SiteFooter } from './components/SiteFooter';
 import { SkipLink } from './components/SkipLink';
 import { CombatSection } from './sections/Combat/CombatSection';
+import { FinalCTASection } from './sections/FinalCTA/FinalCTASection';
+import { GameModesSection } from './sections/GameModes/GameModesSection';
 import { HeroesSection } from './sections/Heroes/HeroesSection';
 import { OpeningSection } from './sections/Opening/OpeningSection';
 import { ReactionsSection } from './sections/Reactions/ReactionsSection';
+import { ProgressionSection } from './sections/Progression/ProgressionSection';
+import { SoundtrackSection } from './sections/Soundtrack/SoundtrackSection';
 import { SpecialUltimatesSection } from './sections/SpecialUltimates/SpecialUltimatesSection';
 import { WorldSection } from './sections/World/WorldSection';
-
-const upcomingChapters = [
-  { id: 'modes', index: '06', title: 'Choose the Trial' },
-  { id: 'progression', index: '07', title: 'Build Your Answer' },
-  { id: 'play', index: '10', title: 'Enter the Battleground' }
-] as const;
 
 export function App() {
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -28,13 +27,12 @@ export function App() {
         <ReactionsSection />
         <HeroesSection />
         <SpecialUltimatesSection />
-        {upcomingChapters.map(chapter => (
-          <section id={chapter.id} className="chapter-placeholder" key={chapter.id}>
-            <p>{chapter.index} / Transmission forming</p>
-            <h2>{chapter.title}</h2>
-          </section>
-        ))}
+        <GameModesSection />
+        <ProgressionSection />
+        <SoundtrackSection soundEnabled={soundEnabled} onSoundEnabledChange={setSoundEnabled} />
+        <FinalCTASection />
       </main>
+      <SiteFooter />
     </div>
   );
 }
