@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { SiteNavigation } from './components/SiteNavigation';
 import { SkipLink } from './components/SkipLink';
 import { CombatSection } from './sections/Combat/CombatSection';
+import { HeroesSection } from './sections/Heroes/HeroesSection';
 import { OpeningSection } from './sections/Opening/OpeningSection';
 import { ReactionsSection } from './sections/Reactions/ReactionsSection';
+import { SpecialUltimatesSection } from './sections/SpecialUltimates/SpecialUltimatesSection';
 import { WorldSection } from './sections/World/WorldSection';
 
 const upcomingChapters = [
-  { id: 'heroes', index: '04', title: 'Four Limited Legends' },
-  { id: 'special-ultimates', index: '05', title: 'Special Ultimates' },
   { id: 'modes', index: '06', title: 'Choose the Trial' },
   { id: 'progression', index: '07', title: 'Build Your Answer' },
   { id: 'play', index: '10', title: 'Enter the Battleground' }
@@ -26,6 +26,8 @@ export function App() {
         <WorldSection />
         <CombatSection />
         <ReactionsSection />
+        <HeroesSection />
+        <SpecialUltimatesSection />
         {upcomingChapters.map(chapter => (
           <section id={chapter.id} className="chapter-placeholder" key={chapter.id}>
             <p>{chapter.index} / Transmission forming</p>
