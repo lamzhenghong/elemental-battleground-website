@@ -7,7 +7,7 @@ describe('site foundation', () => {
     render(<App />);
 
     expect(screen.getByRole('heading', { level: 1, name: 'Elemental Battleground' })).toBeInTheDocument();
-    for (const id of ['overview', 'world', 'combat', 'heroes', 'special-ultimates', 'modes', 'progression', 'play']) {
+    for (const id of ['overview', 'news', 'world', 'characters', 'elements', 'combat', 'special-ultimates', 'modes', 'progression', 'media', 'play']) {
       expect(document.getElementById(id)).toBeInTheDocument();
     }
   });

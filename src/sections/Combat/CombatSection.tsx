@@ -4,7 +4,7 @@ export function CombatSection() {
   return (
     <section id="combat" className="combat-section" aria-labelledby="combat-title">
       <div className="chapter-heading page-shell">
-        <p className="chapter-index">02 / Combat without hesitation</p>
+        <p className="chapter-index">05 / Combat without hesitation</p>
         <h2 id="combat-title">Your defence is already an attack.</h2>
         <p>Move through telegraphs, turn perfect timing into energy, switch the rhythm, and commit when the opening appears.</p>
       </div>

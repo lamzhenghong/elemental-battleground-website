@@ -1,6 +1,6 @@
 # Elemental Battleground Official Website
 
-Official cinematic promotional website for **Elemental Battleground**, a browser-based fantasy action RPG. The site presents the game's world, combat, elemental reactions, featured heroes, Special Ultimates, modes, progression, soundtrack, and public play link as one responsive scroll journey.
+Official cinematic promotional website for **Elemental Battleground**, a browser-based fantasy action RPG. The site presents verified development news, the game's world, featured heroes, elemental reactions, combat, Special Ultimates, modes, progression, owned media, soundtrack, and public play link as one responsive scroll journey.
 
 ## Technology
 
@@ -38,10 +38,10 @@ The production output is written to `dist`.
 ```text
 public/                 Optimized public media, icons, manifest, and SEO files
 scripts/prepare-media.mjs  Safe copy/optimization pipeline for owned game assets
-src/components/         Shared navigation, footer, skip link, and fallbacks
+src/components/         Shared navigation, cinematic loader, footer, skip link, and fallbacks
 src/content/            Typed game facts and public links
 src/hooks/              Motion and device capability hooks
-src/sections/           Independent cinematic page chapters
+src/sections/           Independent cinematic chapters, including News and Media
 src/styles/             Design tokens and responsive global presentation
 src/test/               Content, behavior, navigation, audio, and metadata tests
 ```
@@ -55,12 +55,14 @@ The current public media is copied from the creator-owned game repository. A fin
 ## Accessibility and Performance
 
 - Semantic chapters and heading order
-- Keyboard-operable navigation and interactions
+- Keyboard-operable navigation, filters, and media lightbox
 - Skip link and visible focus states
+- Session-scoped cinematic loader that does not block repeat visits
+- Transparent hero navigation that becomes compact and opaque while scrolling
 - Muted-by-default optional audio with one reusable player
 - Reduced-motion presentation and lower particle counts on coarse/reduced-data devices
 - Lazy non-critical images, deferred audio, and dynamically loaded GSAP modules
-- Mobile-specific layouts with no forced horizontal page scrolling
+- Mobile-specific layouts verified from 360px portrait through tablet and short landscape viewports, with no forced horizontal page scrolling
 
 ## Deployment
 
@@ -74,4 +76,5 @@ Vercel uses `npm install`, `npm run build`, and the `dist` output directory. The
 
 - No official gameplay trailer URL is available; the trailer action is visibly marked `Coming soon`.
 - The combat scene is explicitly presented as an interactive system visualization, not captured gameplay.
+- News items link to real public development commits; no external CMS or fabricated announcements are used.
 - Browser-generated media playback remains subject to each browser's user-interaction policy.

@@ -20,7 +20,7 @@ export function GameModesSection() {
       <div className="mode-shade" aria-hidden="true" />
       <div className="page-shell modes-shell">
         <header>
-          <p className="chapter-index">06 / Choose the trial</p>
+          <p className="chapter-index">07 / Choose the trial</p>
           <h2 id="modes-title">A different answer for every kind of player.</h2>
         </header>
 

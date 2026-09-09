@@ -35,11 +35,11 @@ export function HeroesSection() {
   };
 
   return (
-    <section id="heroes" className="heroes-section" aria-labelledby="heroes-title" ref={sectionRef} style={sceneStyle}>
+    <section id="characters" className="heroes-section" aria-labelledby="heroes-title" ref={sectionRef} style={sceneStyle}>
       <div className="hero-ambient" aria-hidden="true" />
       <div className="hero-scene page-shell">
         <header className="hero-chapter-heading">
-          <p className="chapter-index">04 / Limited legends</p>
+          <p className="chapter-index">03 / Limited legends</p>
           <h2 id="heroes-title">Four lives. Four elements. One changing field.</h2>
         </header>
 

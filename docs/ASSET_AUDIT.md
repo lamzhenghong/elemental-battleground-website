@@ -37,6 +37,8 @@ This report inventories media suitable for the separate official website. Origin
 
 The other eleven BGM files remain available but will not be copied initially, keeping the site payload focused. Their durations range from 3:13 to 8:00 and total approximately 43.6 MB.
 
+The published Media chapter reuses nine of the optimized owned images above across World, Characters, and Systems categories. Images remain lazy-loaded and open in an accessible, keyboard-operable lightbox; no new external artwork or stock media was introduced.
+
 ## Verified Source Content
 
 - Four limited heroes with real titles, roles, elements, weapons, skills, and Ultimates.
@@ -51,7 +53,7 @@ The other eleven BGM files remain available but will not be copied initially, ke
 
 - No transparent full-body hero renders.
 - No high-resolution vector logo or wordmark.
-- No captured gameplay trailer or per-mechanic gameplay clips.
+- No captured gameplay trailer or per-mechanic gameplay clips; the Media chapter therefore remains an artwork gallery rather than implying captured gameplay.
 - No Special Ultimate video captures.
 - No dedicated mobile gameplay screenshots.
 - No voice lines or captions.
@@ -69,4 +71,3 @@ The other eleven BGM files remain available but will not be copied initially, ke
 ## Rights and Publication Assumption
 
 The user delegated asset and release decisions. The implementation will publish only media already supplied inside the user's game repository and will not add third-party imagery, fonts, music, or stock assets. This is a conservative technical filter, not an independent legal ownership determination.
-

@@ -12,7 +12,7 @@ export function ProgressionSection() {
     <section id="progression" className="progression-section" aria-labelledby="progression-title">
       <div className="page-shell progression-shell">
         <header>
-          <p className="chapter-index">07 / Build your answer</p>
+          <p className="chapter-index">08 / Build your answer</p>
           <h2 id="progression-title">Power is not found. It is composed.</h2>
           <p>Six connected choices shape who joins the party and how every hero moves, reacts, survives, and finishes a fight.</p>
         </header>

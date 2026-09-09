@@ -10,8 +10,17 @@ interface SiteNavigationProps {
 
 export function SiteNavigation({ soundEnabled, onSoundToggle }: SiteNavigationProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 32);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const sections = NAVIGATION
@@ -34,20 +43,40 @@ export function SiteNavigation({ soundEnabled, onSoundToggle }: SiteNavigationPr
 
   useEffect(() => {
     if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusable = mobileNavRef.current?.querySelectorAll<HTMLElement>('a, button:not([disabled])');
+    const first = focusable?.[0];
+    const last = focusable?.[focusable.length - 1];
+    const focusFrame = window.requestAnimationFrame(() => first?.focus());
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        event.preventDefault();
         setMenuOpen(false);
         menuButtonRef.current?.focus();
       }
+      if (event.key === 'Tab' && first && last) {
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="site-header" data-open={menuOpen ? 'true' : 'false'}>
+    <header className="site-header" data-open={menuOpen ? 'true' : 'false'} data-scrolled={scrolled ? 'true' : 'false'}>
       <a className="brand-mark" href="#overview" onClick={closeMenu} aria-label="Elemental Battleground overview">
         <img src="/media/icons/game-logo.png" alt="" width="42" height="42" />
         <span>
@@ -61,6 +90,7 @@ export function SiteNavigation({ soundEnabled, onSoundToggle }: SiteNavigationPr
           <a
             key={item.href}
             href={item.href}
+            className={item.href === '#play' ? 'nav-play' : undefined}
             aria-current={activeSection === item.href.slice(1) ? 'location' : undefined}
             onClick={closeMenu}
           >
@@ -84,7 +114,7 @@ export function SiteNavigation({ soundEnabled, onSoundToggle }: SiteNavigationPr
         </button>
       </div>
 
-      <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
+      <nav ref={mobileNavRef} id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
         {NAVIGATION.map((item, index) => (
           <a
             key={item.href}

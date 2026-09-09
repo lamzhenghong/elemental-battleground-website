@@ -59,6 +59,11 @@ export function OpeningSection() {
           <span>Battleground</span>
         </h1>
         <p className="opening-copy">Every element answers. Every choice changes the field.</p>
+        <div className="opening-signals" aria-label="Game overview">
+          <span><b>07</b> Elements</span>
+          <span><b>04</b> Hero party</span>
+          <span><b>10</b> Story chapters</span>
+        </div>
         <div className="opening-actions">
           <a className="button button-primary" href="#world">
             Begin the journey <ArrowDown aria-hidden="true" />

@@ -17,7 +17,7 @@ export function FinalCTASection() {
       </MediaFallback>
       <div className="final-cta-shade" aria-hidden="true" />
       <div className="page-shell final-cta-copy">
-        <p className="chapter-index">10 / The gate reopens</p>
+        <p className="chapter-index">11 / The gate reopens</p>
         <h2 id="final-title">Your element is waiting.</h2>
         <p>Assemble four heroes. Read the field. Change the outcome.</p>
         <div className="final-actions">

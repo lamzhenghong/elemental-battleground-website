@@ -12,10 +12,10 @@ export function ReactionsSection() {
   const style: ReactionStyle = { '--reaction-a': reaction.colors[0], '--reaction-b': reaction.colors[1] };
 
   return (
-    <section id="reactions" className="reactions-section" aria-labelledby="reactions-title" style={style}>
+    <section id="elements" className="reactions-section" aria-labelledby="reactions-title" style={style}>
       <div className="reaction-stage page-shell">
         <header>
-          <p className="chapter-index">03 / Elemental reactions</p>
+          <p className="chapter-index">04 / Elemental reactions</p>
           <h2 id="reactions-title">Two elements enter. The battlefield leaves changed.</h2>
         </header>
 

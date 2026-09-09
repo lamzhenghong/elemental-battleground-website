@@ -1,4 +1,4 @@
-import type { SiteLink, SpecialUltimateFeature } from '../types/content';
+import type { MediaItem, NewsItem, SiteLink, SpecialUltimateFeature } from '../types/content';
 
 export const SITE_LINKS: Record<'play' | 'development' | 'trailer', SiteLink> = {
   play: {
@@ -22,13 +22,123 @@ export const SITE_LINKS: Record<'play' | 'development' | 'trailer', SiteLink> = 
 };
 
 export const NAVIGATION = [
-  { label: 'Overview', href: '#overview' },
-  { label: 'Combat', href: '#combat' },
-  { label: 'Heroes', href: '#heroes' },
-  { label: 'Special Ultimates', href: '#special-ultimates' },
-  { label: 'Modes', href: '#modes' },
-  { label: 'Progression', href: '#progression' },
+  { label: 'Home', href: '#overview' },
+  { label: 'News', href: '#news' },
+  { label: 'World', href: '#world' },
+  { label: 'Characters', href: '#characters' },
+  { label: 'Elements', href: '#elements' },
+  { label: 'Game Modes', href: '#modes' },
+  { label: 'Media', href: '#media' },
   { label: 'Play', href: '#play' }
+] as const;
+
+export const NEWS_ITEMS: readonly NewsItem[] = [
+  {
+    id: 'saved-team-builds',
+    date: '2026-09-08',
+    category: 'Systems',
+    title: 'Saved Team Builds arrive',
+    summary: 'Five renameable presets now preserve party members, weapons, artifacts, and damage skins for faster loadout changes.',
+    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/e37a6f0',
+    image: '/media/images/progression/weapon-forge.webp'
+  },
+  {
+    id: 'special-ultimate-follow-ups',
+    date: '2026-08-14',
+    category: 'Combat',
+    title: 'Special Ultimates gain follow-up states',
+    summary: 'Eternal Vapor and Worldstorm Genesis now open distinct combo windows after their cinematic impact.',
+    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/6538386',
+    image: '/media/images/world/chapter-10-prime-orbit-core.webp'
+  },
+  {
+    id: 'combat-artifact-polish',
+    date: '2026-08-12',
+    category: 'Progression',
+    title: 'Combat feedback meets artifact resonance',
+    summary: 'Weapon-shaped impacts, clearer critical feedback, artifact set emblems, and Forge resonance visuals strengthen build identity.',
+    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/4dd4b01',
+    image: '/media/images/progression/celestial-summons.webp'
+  }
+] as const;
+
+export const MEDIA_ITEMS: readonly MediaItem[] = [
+  {
+    id: 'whispering-ruins',
+    title: 'Whispering Ruins',
+    caption: 'An overgrown threshold where Aetheria first answers the party.',
+    category: 'World',
+    image: '/media/images/world/chapter-1-whispering-ruins.webp',
+    mobileImage: '/media/images/world/chapter-1-whispering-ruins-960.webp'
+  },
+  {
+    id: 'aether-gates',
+    title: 'Aether Gates',
+    caption: 'Ancient transit rings suspended between elemental frontiers.',
+    category: 'World',
+    image: '/media/images/world/chapter-3-aether-gates.webp',
+    mobileImage: '/media/images/world/chapter-3-aether-gates-960.webp'
+  },
+  {
+    id: 'aurelia-sunflare',
+    title: 'Aurelia Sunflare',
+    caption: 'Solaris answers through a sword drawn like a sunrise.',
+    category: 'Characters',
+    image: '/media/images/heroes/aurelia.webp',
+    mobileImage: '/media/images/heroes/aurelia-640.webp',
+    focalPosition: '52% 32%'
+  },
+  {
+    id: 'kaelen-tidebound',
+    title: 'Kaelen Tidebound',
+    caption: 'The Pearl Fleet High Admiral holds the line in living water.',
+    category: 'Characters',
+    image: '/media/images/heroes/kaelen.webp',
+    mobileImage: '/media/images/heroes/kaelen-640.webp',
+    focalPosition: '50% 28%'
+  },
+  {
+    id: 'maelis-verdantveil',
+    title: 'Maelis Verdantveil',
+    caption: 'The Living Archive grows wherever its prince takes root.',
+    category: 'Characters',
+    image: '/media/images/heroes/maelis.webp',
+    mobileImage: '/media/images/heroes/maelis-640.webp',
+    focalPosition: '50% 28%'
+  },
+  {
+    id: 'veyra-stormglass',
+    title: 'Veyra Stormglass',
+    caption: 'A prism archer maps impossible paths through the storm.',
+    category: 'Characters',
+    image: '/media/images/heroes/veyra.webp',
+    mobileImage: '/media/images/heroes/veyra-640.webp',
+    focalPosition: '50% 28%'
+  },
+  {
+    id: 'celestial-summons',
+    title: 'Celestial Summons',
+    caption: 'A constellation aligns before a new ally answers.',
+    category: 'Systems',
+    image: '/media/images/progression/celestial-summons.webp',
+    mobileImage: '/media/images/progression/celestial-summons-960.webp'
+  },
+  {
+    id: 'weapon-forge',
+    title: 'The Forge',
+    caption: 'Armaments and artifact sets are composed around each hero.',
+    category: 'Systems',
+    image: '/media/images/progression/weapon-forge.webp',
+    mobileImage: '/media/images/progression/weapon-forge-960.webp'
+  },
+  {
+    id: 'paradox-verge',
+    title: 'Paradox Verge',
+    caption: 'The horizon folds where the oldest currents lose their direction.',
+    category: 'World',
+    image: '/media/images/world/chapter-9-paradox-verge.webp',
+    mobileImage: '/media/images/world/chapter-9-paradox-verge-960.webp'
+  }
 ] as const;
 
 export const WORLD_CHAPTERS = [

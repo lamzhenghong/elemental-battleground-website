@@ -33,7 +33,7 @@ export function WorldSection() {
   return (
     <section id="world" ref={sectionRef} className="world-section" aria-labelledby="world-title">
       <header className="chapter-heading page-shell">
-        <p className="chapter-index">01 / Enter the world</p>
+        <p className="chapter-index">02 / Enter the world</p>
         <h2 id="world-title">Aetheria is not waiting to be saved.</h2>
         <p>The elemental currents are failing. Every nation has an answer. None of them agree.</p>
       </header>

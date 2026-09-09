@@ -24,7 +24,7 @@ export function SpecialUltimatesSection() {
       <div className="special-grid" aria-hidden="true" />
       <div className="page-shell special-shell">
         <header>
-          <p className="chapter-index">05 / Resonance beyond one hero</p>
+          <p className="chapter-index">06 / Resonance beyond one hero</p>
           <p className="special-eyebrow"><AudioLines aria-hidden="true" /> Signature battle system</p>
           <h2 id="special-title">When two full gauges answer as one.</h2>
         </header>

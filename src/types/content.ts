@@ -66,3 +66,27 @@ export interface SpecialUltimateFeature {
   statement: string;
   colors: readonly [string, string];
 }
+
+export type NewsCategory = 'Systems' | 'Combat' | 'Progression';
+
+export interface NewsItem {
+  id: string;
+  date: string;
+  category: NewsCategory;
+  title: string;
+  summary: string;
+  href: string;
+  image: string;
+}
+
+export type MediaCategory = 'World' | 'Characters' | 'Systems';
+
+export interface MediaItem {
+  id: string;
+  title: string;
+  caption: string;
+  category: MediaCategory;
+  image: string;
+  mobileImage?: string;
+  focalPosition?: string;
+}

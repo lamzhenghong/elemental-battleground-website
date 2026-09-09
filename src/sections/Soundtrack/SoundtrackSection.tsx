@@ -21,7 +21,7 @@ export function SoundtrackSection({ soundEnabled, onSoundEnabledChange }: Soundt
     <section id="soundtrack" className="soundtrack-section" aria-labelledby="soundtrack-title">
       <div className="page-shell soundtrack-shell">
         <header>
-          <p className="chapter-index">09 / Echoes of Aetheria</p>
+          <p className="chapter-index">10 / Echoes of Aetheria</p>
           <h2 id="soundtrack-title">Let the world answer back.</h2>
           <p>Optional excerpts from the game soundtrack. Playback begins only when you choose it.</p>
         </header>
