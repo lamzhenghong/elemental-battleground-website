@@ -411,14 +411,12 @@ canvas {
 }
 
 .scroll-cue {
-  position: absolute;
+  position: relative;
   z-index: 5;
-  bottom: 22px;
-  left: 50%;
   display: grid;
   justify-items: center;
   gap: 9px;
-  translate: -50% 0;
+  margin-top: clamp(20px, 3.2vh, 36px);
   color: var(--mist-400);
   font-family: var(--mono);
   font-size: 8px;
@@ -1859,6 +1857,20 @@ canvas {
   max-width: 930px;
   margin: 0 auto clamp(44px, 6vw, 78px);
   text-align: center;
+}
+
+.special-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px clamp(24px, 4vw, 64px);
+  margin-bottom: 24px;
+}
+
+.special-meta .chapter-index,
+.special-meta .special-eyebrow {
+  margin: 0;
 }
 
 .special-eyebrow {

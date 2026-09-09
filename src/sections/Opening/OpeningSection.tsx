@@ -75,12 +75,11 @@ export function OpeningSection() {
             Watch trailer <span>Coming soon</span>
           </button>
         </div>
+        <a className="scroll-cue" href="#world" aria-label="Scroll to enter the world">
+          <span>Scroll to cross the gate</span>
+          <i aria-hidden="true" />
+        </a>
       </div>
-
-      <a className="scroll-cue" href="#world" aria-label="Scroll to enter the world">
-        <span>Scroll to cross the gate</span>
-        <i aria-hidden="true" />
-      </a>
     </section>
   );
 }
