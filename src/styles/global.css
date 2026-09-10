@@ -3587,19 +3587,162 @@ main > section {
   line-height: 1.65;
 }
 
-.news-list a {
+.news-read {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   margin-top: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--gold-soft);
+  cursor: pointer;
+  font: 800 9px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.news-read svg {
+  width: 14px;
+}
+
+.news-empty {
+  grid-column: 1 / -1;
+  min-height: 220px;
+  margin: 0;
+  padding: 72px 28px;
+  border-bottom: 1px solid var(--line);
+  color: var(--mist-400);
+  font: 700 11px/1.7 var(--mono);
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.news-dialog {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 56px);
+}
+
+.news-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: rgba(1, 4, 10, 0.88);
+  cursor: zoom-out;
+  backdrop-filter: blur(12px);
+}
+
+.news-dialog-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.84fr) minmax(360px, 1fr);
+  width: min(1040px, 100%);
+  max-height: min(760px, calc(100svh - 36px));
+  overflow: auto;
+  border: 1px solid rgba(255, 202, 76, 0.34);
+  background: #060b14;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+}
+
+.news-dialog-panel > img {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  filter: saturate(0.78) brightness(0.62);
+}
+
+.news-dialog-content {
+  align-self: center;
+  padding: clamp(36px, 5vw, 70px);
+}
+
+.news-dialog-content h2 {
+  max-width: 580px;
+  margin: 16px 0 0;
+  font: 500 clamp(35px, 4vw, 58px)/0.98 var(--display);
+  text-wrap: balance;
+}
+
+.news-dialog-date {
+  margin: 18px 0 0;
+  color: var(--cyan-soft);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.news-dialog-summary {
+  margin: 26px 0 0;
+  color: var(--mist-200);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.news-dialog-content ul {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  color: var(--mist-400);
+  font-size: 13px;
+  line-height: 1.65;
+  list-style: none;
+}
+
+.news-dialog-content li {
+  position: relative;
+  padding-left: 19px;
+}
+
+.news-dialog-content li::before {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 7px;
+  height: 1px;
+  background: var(--gold);
+  content: '';
+}
+
+.news-dialog-content a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 26px;
   color: var(--gold-soft);
   font: 800 9px/1 var(--mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.news-list a svg {
-  width: 14px;
+.news-dialog-content a svg {
+  width: 15px;
+}
+
+.news-dialog-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  background: rgba(4, 8, 15, 0.84);
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.news-dialog-close svg {
+  width: 19px;
 }
 
 .media-section {
@@ -3631,6 +3774,121 @@ main > section {
   color: var(--mist-400);
   font-size: 15px;
   line-height: 1.75;
+}
+
+.gameplay-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(330px, 0.78fr);
+  min-height: 390px;
+  margin-top: 50px;
+  overflow: hidden;
+  border: 1px solid rgba(87, 184, 227, 0.25);
+  background: #060b14;
+}
+
+.gameplay-showcase-art {
+  position: relative;
+  min-height: 390px;
+  overflow: hidden;
+}
+
+.gameplay-showcase-art::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(90deg, rgba(3, 7, 13, 0.08), rgba(3, 7, 13, 0.82));
+}
+
+.gameplay-showcase-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) brightness(0.56);
+}
+
+.gameplay-showcase-art span {
+  position: absolute;
+  z-index: 1;
+  inset: 50% auto auto 50%;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  border: 1px solid rgba(255, 202, 76, 0.62);
+  border-radius: 50%;
+  background: rgba(4, 8, 15, 0.72);
+  color: var(--gold-soft);
+  transform: translate(-50%, -50%);
+}
+
+.gameplay-showcase-art svg {
+  width: 25px;
+}
+
+.gameplay-showcase-copy {
+  align-self: center;
+  padding: clamp(34px, 4.5vw, 64px);
+}
+
+.gameplay-showcase-kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--cyan-soft);
+  font: 800 9px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gameplay-showcase-kicker svg {
+  width: 15px;
+}
+
+.gameplay-showcase h3 {
+  max-width: 520px;
+  margin: 18px 0 0;
+  font: 500 clamp(35px, 4vw, 58px)/0.96 var(--display);
+  text-wrap: balance;
+}
+
+.gameplay-showcase-copy > p:nth-of-type(2),
+.gameplay-showcase-description {
+  margin: 22px 0 0;
+  color: var(--mist-400);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.gameplay-showcase-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 25px;
+}
+
+.gameplay-showcase-tabs button {
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  background: rgba(4, 8, 15, 0.74);
+  color: var(--mist-400);
+  cursor: pointer;
+  font: 800 8px/1 var(--mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.gameplay-showcase-tabs button[aria-pressed='true'] {
+  border-color: rgba(255, 202, 76, 0.7);
+  color: var(--gold-soft);
+  background: rgba(255, 202, 76, 0.08);
+}
+
+.gameplay-showcase-description {
+  min-height: 44px;
+  margin-top: 14px;
+  color: var(--mist-200);
 }
 
 .media-grid {
@@ -3820,6 +4078,12 @@ main > section {
 @media (max-width: 1120px) {
   .site-header[data-scrolled='true'] {
     min-height: var(--header-height);
+  }
+
+  .mobile-nav {
+    inset: var(--header-height) 0 0;
+    align-content: start;
+    height: calc(100svh - var(--header-height));
   }
 
   .mobile-nav a[href='#play'] {
@@ -4020,6 +4284,599 @@ main > section {
 
   .media-lightbox-image {
     min-height: calc(100svh - 26px);
+  }
+}
+
+/* Player journey pacing and interaction polish */
+.mobile-nav a[aria-current='location'] {
+  color: var(--gold-soft);
+  box-shadow: inset 3px 0 var(--gold);
+}
+
+.opening-capabilities {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 22px;
+  margin-top: 14px;
+  color: rgba(224, 233, 246, 0.72);
+  font: 700 8px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.opening-capabilities span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.opening-capabilities svg {
+  width: 14px;
+  height: 14px;
+  color: var(--cyan-soft);
+}
+
+.hero-stage {
+  touch-action: pan-y;
+}
+
+.hero-stage:focus-visible {
+  outline-offset: 7px;
+}
+
+.simulator-instruction {
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--mist-400);
+  background: rgba(8, 17, 30, 0.76);
+  font: 700 9px/1.55 var(--mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.media-lightbox {
+  touch-action: pan-y;
+}
+
+.news-section {
+  padding-block: clamp(76px, 7vw, 108px);
+}
+
+.news-heading h2,
+.media-shell > header h2 {
+  font-size: clamp(52px, 6.4vw, 96px);
+}
+
+.news-filters,
+.media-filters {
+  margin-block: 34px 18px;
+}
+
+.news-list article {
+  grid-template-columns: 116px 1fr;
+  min-height: 208px;
+}
+
+.news-list article.is-featured {
+  min-height: 416px;
+}
+
+.news-list article > div {
+  padding: 22px;
+}
+
+.news-list article:not(.is-featured) h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: clamp(20px, 1.65vw, 26px);
+  line-height: 1.04;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.news-list article:not(.is-featured) > div > p:nth-of-type(2) {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 12px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.news-list article:not(.is-featured) .news-read {
+  margin-top: 16px;
+}
+
+.world-section {
+  padding-block: clamp(72px, 6.5vw, 98px);
+}
+
+.chapter-heading {
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.world-frames {
+  gap: clamp(24px, 3.4vw, 48px);
+}
+
+.world-frame {
+  min-height: clamp(420px, 38vw, 490px);
+}
+
+.world-frame-copy {
+  bottom: clamp(28px, 4vw, 54px);
+}
+
+.world-frame-copy > span {
+  margin-bottom: 22px;
+}
+
+.world-frame-copy small {
+  margin-top: 16px;
+}
+
+.hero-scene {
+  padding-block: clamp(74px, 6.8vw, 98px) clamp(60px, 5.5vw, 82px);
+}
+
+.hero-chapter-heading {
+  margin-bottom: clamp(34px, 4.5vw, 56px);
+}
+
+.hero-stage {
+  min-height: min(610px, 68svh);
+}
+
+.hero-scene-copy {
+  padding-block: clamp(34px, 4vw, 58px);
+}
+
+.hero-meta {
+  margin-bottom: 18px;
+}
+
+.combat-section,
+.reactions-section {
+  padding-block: clamp(74px, 6.7vw, 104px);
+}
+
+.reaction-collider {
+  min-height: 360px;
+  margin-top: clamp(32px, 4vw, 54px);
+}
+
+.special-shell {
+  padding-block: clamp(74px, 6.8vw, 102px);
+}
+
+.special-shell > header {
+  margin-bottom: clamp(38px, 4.5vw, 56px);
+}
+
+.resonance-stage {
+  min-height: min(540px, 62svh);
+}
+
+.modes-section,
+.modes-shell {
+  min-height: 0;
+}
+
+.modes-shell {
+  gap: 30px clamp(42px, 5vw, 68px);
+  padding-block: clamp(74px, 6.3vw, 94px) clamp(32px, 3.5vw, 48px);
+}
+
+.modes-shell > header h2 {
+  font-size: clamp(48px, 6.3vw, 94px);
+}
+
+.mode-story h3 {
+  font-size: clamp(50px, 6.2vw, 92px);
+}
+
+.mode-rail button {
+  min-height: 56px;
+}
+
+.progression-section {
+  min-height: 0;
+}
+
+.progression-shell {
+  padding-block: clamp(74px, 6.6vw, 100px);
+}
+
+.progression-shell > header h2 {
+  font-size: clamp(50px, 6.4vw, 96px);
+}
+
+.progression-orbit {
+  min-height: 540px;
+  margin-top: 42px;
+}
+
+.progression-orbit::before {
+  width: 450px;
+  height: 450px;
+}
+
+.progression-orbit::after {
+  width: 310px;
+  height: 310px;
+}
+
+.progression-core {
+  width: 272px;
+  min-height: 272px;
+  padding: 30px;
+}
+
+.progression-core h3 {
+  margin-top: 18px;
+}
+
+.progression-path button {
+  min-height: 66px;
+}
+
+.media-section {
+  padding-block: clamp(74px, 6.6vw, 100px);
+}
+
+.gameplay-showcase {
+  grid-template-columns: minmax(0, 1.08fr) minmax(410px, 0.92fr);
+  min-height: 320px;
+  margin-top: 34px;
+}
+
+.gameplay-showcase-art {
+  min-height: 320px;
+}
+
+.gameplay-showcase-copy {
+  padding: clamp(26px, 3vw, 42px);
+}
+
+.gameplay-showcase h3 {
+  margin-top: 14px;
+  font-size: clamp(32px, 3.3vw, 48px);
+}
+
+.gameplay-showcase-copy > p:nth-of-type(2) {
+  margin-top: 16px;
+  line-height: 1.55;
+}
+
+.gameplay-showcase-tabs {
+  margin-top: 18px;
+}
+
+.gameplay-showcase-description {
+  margin-top: 10px;
+}
+
+.media-grid {
+  grid-auto-rows: clamp(158px, 13vw, 192px);
+}
+
+.soundtrack-shell {
+  padding-block: clamp(74px, 6.6vw, 98px);
+}
+
+.soundtrack-shell > header {
+  margin-bottom: 40px;
+}
+
+.soundtrack-shell > header h2 {
+  font-size: clamp(50px, 6.3vw, 94px);
+}
+
+.sound-now-playing {
+  min-height: 300px;
+  padding: clamp(32px, 4vw, 56px);
+}
+
+.sound-now-playing h3 {
+  margin-top: 24px;
+  font-size: clamp(46px, 5.5vw, 78px);
+}
+
+.sound-wave {
+  height: 72px;
+  margin-top: 36px;
+}
+
+.sound-track-list button {
+  min-height: 84px;
+}
+
+@media (max-width: 820px) {
+  .news-dialog-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .news-dialog-panel > img {
+    aspect-ratio: 16 / 7;
+    min-height: 0;
+  }
+
+  .gameplay-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .gameplay-showcase-art {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 760px) {
+  main > section {
+    scroll-margin-top: calc(var(--header-height) - 2px);
+  }
+
+  .mobile-nav {
+    padding-right: max(22px, env(safe-area-inset-right));
+    padding-bottom: max(34px, env(safe-area-inset-bottom));
+    padding-left: max(22px, env(safe-area-inset-left));
+  }
+
+  .opening-content {
+    padding-top: calc(var(--header-height) + 14px);
+  }
+
+  .opening-copy {
+    margin-top: 20px;
+  }
+
+  .opening-signals {
+    margin-top: 18px;
+  }
+
+  .opening-capabilities {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .opening-actions {
+    margin-top: 22px;
+  }
+
+  .world-section,
+  .news-section,
+  .media-section,
+  .combat-section,
+  .reactions-section {
+    padding-block: 76px;
+  }
+
+  .chapter-heading {
+    margin-bottom: 38px;
+  }
+
+  .world-frames {
+    gap: 22px;
+  }
+
+  .world-frame,
+  .world-frame:nth-child(even) {
+    min-height: min(574px, 68svh);
+  }
+
+  .hero-scene {
+    padding-block: 76px 68px;
+  }
+
+  .hero-chapter-heading {
+    margin-bottom: 34px;
+  }
+
+  .hero-visual {
+    height: 56svh;
+    min-height: 400px;
+  }
+
+  .hero-scene-copy {
+    margin-top: -64px;
+  }
+
+  .special-shell,
+  .progression-shell,
+  .soundtrack-shell {
+    padding-block: 76px;
+  }
+
+  .special-shell > header,
+  .soundtrack-shell > header {
+    margin-bottom: 34px;
+  }
+
+  .resonance-core {
+    padding-top: 38px;
+  }
+
+  .modes-shell {
+    gap: 28px;
+    padding-block: 78px 28px;
+  }
+
+  .progression-orbit {
+    margin-top: 34px;
+    padding-block: 24px;
+  }
+
+  .progression-core {
+    min-height: 238px;
+  }
+
+  .gameplay-showcase {
+    margin-top: 32px;
+  }
+
+  .gameplay-showcase-art {
+    min-height: 224px;
+  }
+
+  .gameplay-showcase-copy {
+    padding: 30px 20px;
+  }
+
+  .gameplay-showcase h3 {
+    font-size: clamp(36px, 11vw, 50px);
+  }
+
+  .gameplay-showcase-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .gameplay-showcase-tabs button {
+    flex: 0 0 auto;
+  }
+
+  .news-filters button {
+    flex: 0 0 auto;
+    min-width: 112px;
+  }
+
+  .news-dialog {
+    padding: 12px;
+  }
+
+  .news-dialog-panel {
+    max-height: calc(100svh - 24px);
+  }
+
+  .news-dialog-content {
+    padding: 30px 20px;
+  }
+
+  .news-dialog-content h2 {
+    padding-right: 32px;
+    font-size: clamp(34px, 10vw, 48px);
+  }
+
+  .news-dialog-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .media-grid {
+    grid-auto-rows: 205px;
+  }
+
+  .sound-now-playing {
+    min-height: 274px;
+  }
+
+  .sound-wave {
+    height: 58px;
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 430px) {
+  .opening-capabilities {
+    gap: 8px 14px;
+  }
+
+  .news-heading h2,
+  .media-shell > header h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .news-list article > div > p:first-child {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .gameplay-showcase-tabs {
+    margin-right: -20px;
+  }
+
+  .simulator-instruction {
+    padding-inline: 12px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 360px) {
+  .opening-capabilities {
+    font-size: 7px;
+  }
+
+  .opening-signals {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+  }
+
+  .opening-signals span {
+    min-width: 0;
+    justify-content: center;
+    gap: 4px;
+    padding-inline: 3px;
+    font-size: 7px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .opening-signals b {
+    font-size: 9px;
+  }
+
+  .gameplay-showcase-art {
+    min-height: 200px;
+  }
+
+  .news-dialog-summary,
+  .news-dialog-content ul {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1921px) {
+  .world-frame {
+    min-height: 620px;
+  }
+
+  .opening-media video,
+  .opening-media img,
+  .final-cta-media img {
+    object-position: center;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .opening-capabilities {
+    margin-top: 8px;
+  }
+
+  .opening-capabilities span {
+    min-height: 22px;
+  }
+
+  .news-dialog {
+    padding: 10px 64px;
+  }
+
+  .news-dialog-panel {
+    grid-template-columns: minmax(240px, 0.7fr) minmax(360px, 1fr);
+    max-height: calc(100svh - 20px);
+  }
+
+  .news-dialog-panel > img {
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+
+  .news-dialog-content {
+    padding: 28px 34px;
   }
 }
 

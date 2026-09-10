@@ -1,5 +1,5 @@
-import { ArrowDown, ExternalLink, Play, Sparkles } from 'lucide-react';
-import { useRef } from 'react';
+import { ArrowDown, ExternalLink, Keyboard, MonitorSmartphone, Play, Sparkles } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { SITE_LINKS } from '../../content/siteContent';
 import { useGsapContext } from '../../hooks/useGsapContext';
 import { useReducedExperience } from '../../hooks/useReducedExperience';
@@ -8,8 +8,34 @@ import { PortalParticles } from './PortalParticles';
 
 export function OpeningSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { reducedMotion, reducedData, coarsePointer } = useReducedExperience();
   const effectsReduced = reducedMotion || reducedData;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reducedData) return;
+    let inView = true;
+
+    const syncPlayback = () => {
+      if (inView && !document.hidden) void video.play().catch(() => undefined);
+      else video.pause();
+    };
+    const observer = typeof IntersectionObserver === 'undefined'
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          inView = entry?.isIntersecting ?? false;
+          syncPlayback();
+        }, { rootMargin: '120px 0px' });
+
+    observer?.observe(video);
+    document.addEventListener('visibilitychange', syncPlayback);
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', syncPlayback);
+      video.pause();
+    };
+  }, [reducedData]);
 
   useGsapContext(
     sectionRef,
@@ -17,8 +43,8 @@ export function OpeningSection() {
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
       timeline
         .from('.opening-kicker', { y: 24, autoAlpha: 0, duration: 0.65 })
-        .from('.opening-title span', { yPercent: 105, duration: 1.05, stagger: 0.09 }, '-=.35')
-        .from('.opening-copy', { y: 24, autoAlpha: 0, duration: 0.7 }, '-=.55')
+        .from('.opening-title span', { yPercent: 28, autoAlpha: 0.55, duration: 0.72, stagger: 0.07 }, '-=.5')
+        .from('.opening-copy', { y: 18, autoAlpha: 0, duration: 0.6 }, '-=.42')
         .from('.opening-actions > *', { y: 18, autoAlpha: 0, duration: 0.55, stagger: 0.08 }, '-=.4');
       gsap.to('.portal-halo', { rotate: 360, duration: 38, ease: 'none', repeat: -1 });
     },
@@ -32,6 +58,7 @@ export function OpeningSection() {
         <MediaFallback className="opening-primary-media" message="Portal visual unavailable">
           {onError => !reducedData ? (
             <video
+              ref={videoRef}
               autoPlay
               muted
               loop
@@ -64,12 +91,16 @@ export function OpeningSection() {
           <span><b>04</b> Hero party</span>
           <span><b>10</b> Story chapters</span>
         </div>
+        <div className="opening-capabilities" aria-label="Verified game availability">
+          <span><MonitorSmartphone aria-hidden="true" /> Play in browser</span>
+          <span><Keyboard aria-hidden="true" /> Keyboard + touch</span>
+        </div>
         <div className="opening-actions">
-          <a className="button button-primary" href="#world">
-            Begin the journey <ArrowDown aria-hidden="true" />
-          </a>
-          <a className="button button-secondary" href={SITE_LINKS.play.href} target="_blank" rel="noreferrer">
+          <a className="button button-primary" href={SITE_LINKS.play.href} target="_blank" rel="noopener noreferrer">
             <Play aria-hidden="true" /> Play now <ExternalLink aria-hidden="true" />
+          </a>
+          <a className="button button-secondary" href="#world">
+            Explore the world <ArrowDown aria-hidden="true" />
           </a>
           <button className="button button-quiet" type="button" disabled title="Official trailer is in production">
             Watch trailer <span>Coming soon</span>

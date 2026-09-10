@@ -21,10 +21,10 @@ export function FinalCTASection() {
         <h2 id="final-title">Your element is waiting.</h2>
         <p>Assemble four heroes. Read the field. Change the outcome.</p>
         <div className="final-actions">
-          <a className="primary-cta" href={SITE_LINKS.play.href} target="_blank" rel="noreferrer">
+          <a className="primary-cta" href={SITE_LINKS.play.href} target="_blank" rel="noopener noreferrer">
             <Play aria-hidden="true" /> {SITE_LINKS.play.label} <ArrowUpRight aria-hidden="true" />
           </a>
-          <a className="secondary-cta" href={SITE_LINKS.development.href} target="_blank" rel="noreferrer">
+          <a className="secondary-cta" href={SITE_LINKS.development.href} target="_blank" rel="noopener noreferrer">
             <Github aria-hidden="true" /> {SITE_LINKS.development.label}
           </a>
           <span className="unavailable-cta" aria-disabled="true">

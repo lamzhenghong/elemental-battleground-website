@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { SiteNavigation } from '../components/SiteNavigation';
@@ -12,7 +12,7 @@ describe('site navigation', () => {
       'World',
       'Characters',
       'Elements',
-      'Game Modes',
+      'Modes',
       'Media',
       'Play'
     ]);
@@ -35,6 +35,15 @@ describe('site navigation', () => {
 
     await user.click(screen.getByRole('link', { name: 'Characters' }));
     expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('exposes the active section inside the mobile navigation', async () => {
+    const user = userEvent.setup();
+    render(<SiteNavigation soundEnabled={false} onSoundToggle={vi.fn()} />);
+
+    await user.click(screen.getByRole('button', { name: 'Open navigation' }));
+    const mobileNavigation = screen.getByRole('navigation', { name: 'Mobile navigation' });
+    expect(within(mobileNavigation).getByRole('link', { name: /Home/ })).toHaveAttribute('aria-current', 'location');
   });
 
   it('closes the mobile menu on Escape and restores trigger focus', async () => {

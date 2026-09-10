@@ -23,4 +23,15 @@ describe('combat simulator keyboard access', () => {
     expect(screen.getByLabelText('Enemy health 880 of 1000')).toBeInTheDocument();
     expect(screen.getByText('Strike connects')).toBeInTheDocument();
   });
+
+  it('maps the displayed R shortcut to hero switching', () => {
+    render(<CombatSimulator />);
+
+    const simulator = screen.getByLabelText('Interactive combat system visualization');
+    fireEvent.keyDown(simulator, { key: 'r' });
+
+    expect(screen.getByText('Kaelen')).toBeInTheDocument();
+    expect(screen.getByText('Combat rhythm changed')).toBeInTheDocument();
+    expect(screen.getByText('R')).toBeInTheDocument();
+  });
 });

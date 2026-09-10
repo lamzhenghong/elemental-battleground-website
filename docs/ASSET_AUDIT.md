@@ -60,6 +60,24 @@ The published Media chapter reuses nine of the optimized owned images above acro
 - No purpose-built 1200x630 Open Graph image.
 - No official social/community URLs or trailer URL.
 
+## Gameplay Showcase Asset Contract
+
+The Media chapter now includes an asset-ready gameplay stage, but it remains explicitly labeled `Gameplay showcase coming soon` until real captures are supplied. Owned world artwork is used only as atmosphere and is identified as artwork rather than gameplay footage.
+
+Recommended future files:
+
+| Path | Recommended format | Intended use |
+| --- | --- | --- |
+| `public/media/gameplay/trailer.mp4` | 1920x1080 H.264 MP4, web optimized | Featured gameplay trailer |
+| `public/media/gameplay/trailer.webm` | 1920x1080 WebM, optional | Efficient browser alternative |
+| `public/media/gameplay/trailer-poster.webp` | 1920x1080 WebP or AVIF | Trailer poster and loading state |
+| `public/media/gameplay/combat-01.webp` | 1920x1080 WebP or AVIF | Parry, dodge, reaction, or switching screenshot |
+| `public/media/gameplay/world-01.webp` | 1920x1080 WebP or AVIF | Real world or campaign screenshot |
+| `public/media/gameplay/bosses-01.webp` | 1920x1080 WebP or AVIF | Real boss encounter screenshot |
+| `public/media/gameplay/special-ultimates-01.webp` | 1920x1080 WebP or AVIF | Real Special Ultimate screenshot |
+
+Optional mechanic clips should be 6-12 seconds, muted by default, include captions when speech is present, and have a mobile-appropriate encoded source. Adding a real trailer should activate play, pause, mute, and fullscreen controls plus the existing accessible lightbox pattern.
+
 ## Placeholder and Fallback Policy
 
 - Combat and reaction sections use labeled interactive system visualizations, never unlabeled fake gameplay.

@@ -6,7 +6,7 @@ const actions: readonly { id: CombatAction; label: string; keyLabel: string; ico
   { id: 'attack', label: 'Strike', keyLabel: 'J', icon: Swords },
   { id: 'dash', label: 'Perfect dodge', keyLabel: 'Space', icon: Wind },
   { id: 'parry', label: 'Parry', keyLabel: 'C', icon: Shield },
-  { id: 'switch', label: 'Switch hero', keyLabel: 'Tab', icon: RefreshCw },
+  { id: 'switch', label: 'Switch hero', keyLabel: 'R', icon: RefreshCw },
   { id: 'skill', label: 'Elemental skill', keyLabel: 'E', icon: Sparkles },
   { id: 'burst', label: 'Celestial Burst', keyLabel: 'Q', icon: Gauge }
 ];
@@ -15,6 +15,7 @@ const keyActions: Record<string, CombatAction> = {
   j: 'attack',
   ' ': 'dash',
   c: 'parry',
+  r: 'switch',
   e: 'skill',
   q: 'burst'
 };
@@ -37,6 +38,7 @@ export function CombatSimulator() {
         <span><i aria-hidden="true" /> Interactive system visualization</span>
         <button type="button" onClick={() => dispatch('reset')}><RotateCcw aria-hidden="true" /> Reset</button>
       </div>
+      <p className="simulator-instruction">Focus this field, then use J, Space, C, R, E, or Q. Every control is also tappable.</p>
 
       <div className="simulator-field" data-action={state.lastAction}>
         <div className="simulator-grid" aria-hidden="true" />
@@ -78,7 +80,7 @@ export function CombatSimulator() {
         {actions.map(action => {
           const Icon = action.icon;
           return (
-            <button key={action.id} type="button" onClick={() => dispatch(action.id)}>
+            <button key={action.id} type="button" onClick={() => dispatch(action.id)} aria-keyshortcuts={action.keyLabel}>
               <Icon aria-hidden="true" />
               <span>{action.label}</span>
               <kbd>{action.keyLabel}</kbd>

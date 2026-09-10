@@ -1,13 +1,24 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { SOUNDTRACK } from '../../content/soundtrack';
 
+const VOLUME_STORAGE_KEY = 'eb-site-soundtrack-volume';
+
+const readStoredVolume = () => {
+  try {
+    const stored = Number(window.localStorage.getItem(VOLUME_STORAGE_KEY));
+    return Number.isFinite(stored) && stored >= 0 && stored <= 1 ? stored : 0.65;
+  } catch {
+    return 0.65;
+  }
+};
+
 export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (enabled: boolean) => void) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.65);
+  const [volume, setVolumeState] = useState(readStoredVolume);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
@@ -62,6 +73,16 @@ export function useExclusiveAudio(soundEnabled: boolean, onSoundEnabledChange: (
     const nextTime = Number(event.target.value);
     if (audio) audio.currentTime = nextTime;
     setCurrentTime(nextTime);
+  };
+
+  const setVolume = (nextVolume: number) => {
+    const clampedVolume = Math.min(1, Math.max(0, nextVolume));
+    setVolumeState(clampedVolume);
+    try {
+      window.localStorage.setItem(VOLUME_STORAGE_KEY, String(clampedVolume));
+    } catch {
+      // The player still works when storage is unavailable.
+    }
   };
 
   return {

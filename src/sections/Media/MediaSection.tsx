@@ -1,8 +1,9 @@
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { MediaFallback } from '../../components/MediaFallback';
 import { MEDIA_ITEMS } from '../../content/siteContent';
 import type { MediaCategory } from '../../types/content';
+import { GameplayShowcase } from './GameplayShowcase';
 
 const FILTERS: readonly ('All' | MediaCategory)[] = ['All', 'World', 'Characters', 'Systems'];
 
@@ -12,19 +13,23 @@ export function MediaSection() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLButtonElement | null>(null);
-  const visibleItems = filter === 'All' ? MEDIA_ITEMS : MEDIA_ITEMS.filter(item => item.category === filter);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const visibleItems = useMemo(
+    () => filter === 'All' ? MEDIA_ITEMS : MEDIA_ITEMS.filter(item => item.category === filter),
+    [filter]
+  );
   const selectedIndex = selectedId ? visibleItems.findIndex(item => item.id === selectedId) : -1;
   const selected = selectedIndex >= 0 ? visibleItems[selectedIndex] : null;
 
-  const close = () => {
+  const close = useCallback(() => {
     setSelectedId(null);
     openerRef.current?.focus();
-  };
+  }, []);
 
-  const move = (offset: number) => {
+  const move = useCallback((offset: number) => {
     if (selectedIndex < 0) return;
     setSelectedId(visibleItems[(selectedIndex + offset + visibleItems.length) % visibleItems.length].id);
-  };
+  }, [selectedIndex, visibleItems]);
 
   useEffect(() => {
     if (!selected) return;
@@ -56,7 +61,7 @@ export function MediaSection() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [selectedId, selectedIndex, selected, visibleItems]);
+  }, [close, move, selected]);
 
   const selectFilter = (category: 'All' | MediaCategory) => {
     setFilter(category);
@@ -71,6 +76,8 @@ export function MediaSection() {
           <h2 id="media-title">Aetheria, frame by frame.</h2>
           <p>Explore owned artwork from the world, its heroes, and the systems that shape every build.</p>
         </header>
+
+        <GameplayShowcase />
 
         <div className="media-filters" aria-label="Filter media">
           {FILTERS.map(category => (
@@ -105,6 +112,8 @@ export function MediaSection() {
                       src={item.image}
                       alt=""
                       loading="lazy"
+                      width="1600"
+                      height="900"
                       onError={onError}
                       style={{ '--media-focus': item.focalPosition ?? 'center' } as CSSProperties}
                     />
@@ -119,11 +128,31 @@ export function MediaSection() {
       </div>
 
       {selected && (
-        <div ref={lightboxRef} className="media-lightbox" role="dialog" aria-modal="true" aria-label={selected.title}>
+        <div
+          ref={lightboxRef}
+          className="media-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selected.title}
+          onTouchStart={event => {
+            const touch = event.touches[0];
+            touchStartRef.current = touch ? { x: touch.clientX, y: touch.clientY } : null;
+          }}
+          onTouchEnd={event => {
+            const start = touchStartRef.current;
+            const touch = event.changedTouches[0];
+            touchStartRef.current = null;
+            if (!start || !touch) return;
+            const horizontal = touch.clientX - start.x;
+            const vertical = touch.clientY - start.y;
+            if (Math.abs(horizontal) < 54 || Math.abs(horizontal) <= Math.abs(vertical)) return;
+            move(horizontal < 0 ? 1 : -1);
+          }}
+        >
           <button className="media-lightbox-backdrop" type="button" onClick={close} aria-label="Dismiss expanded media" tabIndex={-1} />
           <figure>
             <MediaFallback className="media-lightbox-image" message={`${selected.title} image unavailable`}>
-              {onError => <img src={selected.image} alt={selected.title} onError={onError} />}
+              {onError => <img src={selected.image} alt={selected.title} onError={onError} width="1600" height="900" />}
             </MediaFallback>
             <figcaption>
               <span>{selected.category} / {String(selectedIndex + 1).padStart(2, '0')}</span>

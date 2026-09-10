@@ -6,6 +6,7 @@ import { SoundtrackSection } from '../sections/Soundtrack/SoundtrackSection';
 
 describe('soundtrack player', () => {
   beforeEach(() => {
+    window.localStorage.clear();
     vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
     vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => undefined);
     vi.spyOn(HTMLMediaElement.prototype, 'load').mockImplementation(() => undefined);
@@ -46,5 +47,17 @@ describe('soundtrack player', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Play selected track Main Menu Theme' }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: 'Pause selected track Main Menu Theme' })).toBeInTheDocument());
+  });
+
+  it('restores and saves the soundtrack volume without starting playback', () => {
+    window.localStorage.setItem('eb-site-soundtrack-volume', '0.35');
+    render(<SoundtrackSection soundEnabled onSoundEnabledChange={() => undefined} />);
+
+    const volume = screen.getByRole('slider', { name: 'Soundtrack volume' });
+    expect(volume).toHaveValue('0.35');
+    expect(document.querySelector('audio')).not.toHaveAttribute('src');
+
+    fireEvent.change(volume, { target: { value: '0.8' } });
+    expect(window.localStorage.getItem('eb-site-soundtrack-volume')).toBe('0.8');
   });
 });

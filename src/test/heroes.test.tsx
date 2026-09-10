@@ -15,4 +15,16 @@ describe('hero showcase', () => {
     expect(screen.getByText('Stormglass Refract')).toBeInTheDocument();
     expect(screen.getByText('Nocturne Thunderfall')).toBeInTheDocument();
   });
+
+  it('changes dossiers with arrow keys and horizontal swipes', () => {
+    render(<HeroesSection />);
+    const stage = screen.getByRole('group', { name: 'Active hero dossier' });
+
+    fireEvent.keyDown(stage, { key: 'ArrowRight' });
+    expect(screen.getByRole('heading', { name: 'Kaelen Tidebound' })).toBeInTheDocument();
+
+    fireEvent.touchStart(stage, { touches: [{ clientX: 260, clientY: 120 }] });
+    fireEvent.touchEnd(stage, { changedTouches: [{ clientX: 110, clientY: 124 }] });
+    expect(screen.getByRole('heading', { name: 'Maelis Verdantveil' })).toBeInTheDocument();
+  });
 });

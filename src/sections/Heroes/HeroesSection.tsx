@@ -8,6 +8,7 @@ import { MediaFallback } from '../../components/MediaFallback';
 export function HeroesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const reducedExperience = useReducedExperience();
   const hero = HEROES[activeIndex];
   const sceneStyle = {
@@ -21,10 +22,10 @@ export function HeroesSection() {
     ({ gsap }) => {
       gsap.fromTo(
         '.hero-scene-copy > *',
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.72, stagger: 0.06, ease: 'power3.out' }
+        { y: 16, opacity: 0.36 },
+        { y: 0, opacity: 1, duration: 0.56, stagger: 0.045, ease: 'power3.out' }
       );
-      gsap.fromTo('.hero-portrait', { scale: 1.04, opacity: 0.65 }, { scale: 1, opacity: 1, duration: 0.9 });
+      gsap.fromTo('.hero-portrait', { scale: 1.025, opacity: 0.72 }, { scale: 1, opacity: 1, duration: 0.7 });
     },
     [activeIndex],
     reducedExperience.reducedMotion
@@ -43,13 +44,37 @@ export function HeroesSection() {
           <h2 id="heroes-title">Four lives. Four elements. One changing field.</h2>
         </header>
 
-        <div className="hero-stage">
+        <div
+          className="hero-stage"
+          role="group"
+          aria-label="Active hero dossier"
+          tabIndex={0}
+          onKeyDown={event => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+            event.preventDefault();
+            selectRelative(event.key === 'ArrowRight' ? 1 : -1);
+          }}
+          onTouchStart={event => {
+            const touch = event.touches[0];
+            touchStartRef.current = touch ? { x: touch.clientX, y: touch.clientY } : null;
+          }}
+          onTouchEnd={event => {
+            const start = touchStartRef.current;
+            const touch = event.changedTouches[0];
+            touchStartRef.current = null;
+            if (!start || !touch) return;
+            const horizontal = touch.clientX - start.x;
+            const vertical = touch.clientY - start.y;
+            if (Math.abs(horizontal) < 54 || Math.abs(horizontal) <= Math.abs(vertical)) return;
+            selectRelative(horizontal < 0 ? 1 : -1);
+          }}
+        >
           <div className="hero-visual" aria-hidden="true">
             <MediaFallback className="hero-primary-media" message={`${hero.name} visual unavailable`}>
               {onError => (
                 <>
-                  <img className="hero-environment" src={hero.environment} alt="" loading="lazy" onError={onError} />
-                  <img className="hero-portrait" src={hero.image} alt="" loading="lazy" onError={onError} />
+                  <img className="hero-environment" src={hero.environment} alt="" loading="lazy" onError={onError} width="1600" height="900" />
+                  <img className="hero-portrait" src={hero.image} alt="" loading="lazy" onError={onError} width="1024" height="1024" />
                 </>
               )}
             </MediaFallback>
@@ -100,7 +125,7 @@ export function HeroesSection() {
               onClick={() => setActiveIndex(index)}
               style={{ '--roster-accent': candidate.accent } as CSSProperties}
             >
-              <img src={candidate.image} alt="" loading="lazy" />
+              <img src={candidate.image} alt="" loading="lazy" width="1024" height="1024" />
               <span>{candidate.shortName}</span>
               <small>{candidate.element}</small>
             </button>

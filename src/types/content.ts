@@ -67,16 +67,28 @@ export interface SpecialUltimateFeature {
   colors: readonly [string, string];
 }
 
-export type NewsCategory = 'Systems' | 'Combat' | 'Progression';
+export type NewsCategory = 'Update' | 'Event' | 'Development' | 'Announcement';
 
 export interface NewsItem {
   id: string;
   date: string;
   category: NewsCategory;
+  patch: string;
   title: string;
   summary: string;
-  href: string;
+  details: readonly string[];
+  technicalHref: string;
   image: string;
+}
+
+export type GameplayCategoryId = 'combat' | 'world' | 'bosses' | 'special-ultimates';
+
+export interface GameplayCategory {
+  id: GameplayCategoryId;
+  label: string;
+  description: string;
+  assetPath: string;
+  status: 'awaiting-authentic-capture';
 }
 
 export type MediaCategory = 'World' | 'Characters' | 'Systems';

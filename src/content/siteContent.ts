@@ -1,4 +1,6 @@
-import type { MediaItem, NewsItem, SiteLink, SpecialUltimateFeature } from '../types/content';
+import type { MediaItem, SiteLink, SpecialUltimateFeature } from '../types/content';
+
+export { NEWS_ITEMS } from './news';
 
 export const SITE_LINKS: Record<'play' | 'development' | 'trailer', SiteLink> = {
   play: {
@@ -27,39 +29,9 @@ export const NAVIGATION = [
   { label: 'World', href: '#world' },
   { label: 'Characters', href: '#characters' },
   { label: 'Elements', href: '#elements' },
-  { label: 'Game Modes', href: '#modes' },
+  { label: 'Modes', href: '#modes' },
   { label: 'Media', href: '#media' },
   { label: 'Play', href: '#play' }
-] as const;
-
-export const NEWS_ITEMS: readonly NewsItem[] = [
-  {
-    id: 'saved-team-builds',
-    date: '2026-09-08',
-    category: 'Systems',
-    title: 'Saved Team Builds arrive',
-    summary: 'Five renameable presets now preserve party members, weapons, artifacts, and damage skins for faster loadout changes.',
-    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/e37a6f0',
-    image: '/media/images/progression/weapon-forge.webp'
-  },
-  {
-    id: 'special-ultimate-follow-ups',
-    date: '2026-08-14',
-    category: 'Combat',
-    title: 'Special Ultimates gain follow-up states',
-    summary: 'Eternal Vapor and Worldstorm Genesis now open distinct combo windows after their cinematic impact.',
-    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/6538386',
-    image: '/media/images/world/chapter-10-prime-orbit-core.webp'
-  },
-  {
-    id: 'combat-artifact-polish',
-    date: '2026-08-12',
-    category: 'Progression',
-    title: 'Combat feedback meets artifact resonance',
-    summary: 'Weapon-shaped impacts, clearer critical feedback, artifact set emblems, and Forge resonance visuals strengthen build identity.',
-    href: 'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/4dd4b01',
-    image: '/media/images/progression/celestial-summons.webp'
-  }
 ] as const;
 
 export const MEDIA_ITEMS: readonly MediaItem[] = [

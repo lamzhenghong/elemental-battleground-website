@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { GAME_MODES } from '../content/gameModes';
+import { GAMEPLAY_CATEGORIES } from '../content/gameplayMedia';
 import { HEROES } from '../content/heroes';
+import { NEWS_CATEGORIES, NEWS_ITEMS } from '../content/news';
 import { REACTIONS } from '../content/reactions';
-import { MEDIA_ITEMS, NEWS_ITEMS, SITE_LINKS, SPECIAL_ULTIMATES } from '../content/siteContent';
+import { MEDIA_ITEMS, SITE_LINKS, SPECIAL_ULTIMATES } from '../content/siteContent';
 
 describe('official site content', () => {
   it('keeps the four featured limited heroes in the intended order', () => {
@@ -33,10 +35,18 @@ describe('official site content', () => {
     expect(SPECIAL_ULTIMATES[1].heroes).toEqual(['Maelis', 'Veyra']);
   });
 
-  it('publishes only dated, repository-backed development dispatches', () => {
+  it('publishes player-facing, repository-backed official dispatches', () => {
+    expect(NEWS_CATEGORIES).toEqual(['Update', 'Event', 'Development', 'Announcement']);
     expect(NEWS_ITEMS).toHaveLength(3);
     expect(NEWS_ITEMS.map(item => item.date)).toEqual(['2026-09-08', '2026-08-14', '2026-08-12']);
-    expect(NEWS_ITEMS.every(item => item.href.includes('github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/'))).toBe(true);
+    expect(NEWS_ITEMS.every(item => item.details.length >= 2)).toBe(true);
+    expect(NEWS_ITEMS.every(item => item.technicalHref.includes('github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/'))).toBe(true);
+  });
+
+  it('keeps gameplay media honest until authentic captures are supplied', () => {
+    expect(GAMEPLAY_CATEGORIES.map(item => item.id)).toEqual(['combat', 'world', 'bosses', 'special-ultimates']);
+    expect(GAMEPLAY_CATEGORIES.every(item => item.status === 'awaiting-authentic-capture')).toBe(true);
+    expect(GAMEPLAY_CATEGORIES.every(item => item.assetPath.startsWith('/media/gameplay/'))).toBe(true);
   });
 
   it('builds the media archive entirely from owned local assets', () => {

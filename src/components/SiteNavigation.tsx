@@ -121,6 +121,7 @@ export function SiteNavigation({ soundEnabled, onSoundToggle }: SiteNavigationPr
             href={item.href}
             onClick={closeMenu}
             tabIndex={menuOpen ? 0 : -1}
+            aria-current={activeSection === item.href.slice(1) ? 'location' : undefined}
           >
             <span>{String(index + 1).padStart(2, '0')}</span>
             {item.label}

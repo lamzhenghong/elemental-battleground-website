@@ -34,6 +34,10 @@ describe('closing chapters', () => {
       'href',
       'https://elemental-battleground.vercel.app/'
     );
+    expect(screen.getByRole('link', { name: 'Play Elemental Battleground' })).toHaveAttribute(
+      'rel',
+      'noopener noreferrer'
+    );
     expect(screen.getByRole('link', { name: 'Follow Development' })).toHaveAttribute(
       'href',
       'https://github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND'

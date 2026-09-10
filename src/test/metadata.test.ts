@@ -18,6 +18,15 @@ describe('production metadata', () => {
     expect(html).toContain('name="twitter:card" content="summary_large_image"');
   });
 
+  it('describes the game with factual VideoGame structured data', () => {
+    const html = read('index.html');
+
+    expect(html).toContain('"@type": "VideoGame"');
+    expect(html).toContain('"playMode": "SinglePlayer"');
+    expect(html).toContain('"gamePlatform": "Web browser"');
+    expect(html).toContain('"target": "https://elemental-battleground.vercel.app/"');
+  });
+
   it('ships indexable web app and brand assets', () => {
     for (const path of [
       'public/manifest.webmanifest',
