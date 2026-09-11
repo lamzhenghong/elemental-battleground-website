@@ -35,7 +35,8 @@ export function ProgressionSection() {
                   onClick={() => setActiveIndex(index)}
                 >
                   <Icon aria-hidden="true" />
-                  <span>{layer.label}</span>
+                  <span className="progression-label-full">{layer.label}</span>
+                  <span className="progression-label-compact">{layer.shortLabel}</span>
                 </button>
               );
             })}

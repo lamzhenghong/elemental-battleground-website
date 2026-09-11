@@ -43,6 +43,19 @@ describe('interactive portal and resonance selection', () => {
     expect(screen.getByTestId('portal-state')).toHaveTextContent('idle:0');
   });
 
+  it('keeps the visible portal prompt in the hero content flow', () => {
+    render(
+      <InteractiveExperienceProvider>
+        <OpeningSection />
+      </InteractiveExperienceProvider>
+    );
+
+    const prompt = screen.getByText('Hold portal to synchronize');
+    expect(prompt).toHaveClass('opening-portal-hint');
+    expect(prompt.closest('.portal-activator')).toBeNull();
+    expect(screen.getByRole('button', { name: /synchronize portal/i })).toHaveAccessibleDescription(/hold/i);
+  });
+
   it('activates once after a complete keyboard hold', () => {
     render(
       <InteractiveExperienceProvider>

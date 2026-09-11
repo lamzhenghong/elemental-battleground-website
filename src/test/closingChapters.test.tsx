@@ -39,6 +39,19 @@ describe('closing chapters', () => {
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
+  it('gives every progression choice a compact mobile label', () => {
+    const { container } = render(<ProgressionSection />);
+
+    expect(Array.from(container.querySelectorAll('.progression-label-compact')).map(label => label.textContent)).toEqual([
+      'Heroes',
+      'Summons',
+      'Artifacts',
+      'Forge',
+      'Reactions',
+      'Skins'
+    ]);
+  });
+
   it('links only to real destinations', () => {
     renderWithExperience(<FinalCTASection />);
 

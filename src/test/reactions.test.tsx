@@ -22,4 +22,12 @@ describe('elemental reaction presentation', () => {
     expect(screen.getByText('Kinetic Shockwave')).toBeInTheDocument();
     expect(screen.getAllByText('Pyro + Electro')).toHaveLength(2);
   });
+
+  it('exposes a dedicated responsive heading group', () => {
+    render(<ReactionsSection />);
+
+    const title = screen.getByRole('heading', { name: 'Two elements enter. The battlefield leaves changed.' });
+    expect(title).toHaveClass('reaction-title');
+    expect(title.parentElement).toHaveClass('reaction-heading');
+  });
 });

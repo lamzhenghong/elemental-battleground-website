@@ -1064,26 +1064,28 @@ canvas {
   transition: background 500ms ease;
 }
 
-.reaction-stage > header {
+.reaction-heading {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr;
-  gap: 28px clamp(30px, 7vw, 120px);
-  align-items: end;
+  grid-template-columns: minmax(176px, 0.32fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 78px);
+  align-items: start;
 }
 
-.reaction-stage > header .chapter-index {
-  grid-column: 1 / -1;
-  margin: 0;
+.reaction-heading .chapter-index {
+  grid-column: 1;
+  margin: 14px 0 0;
   color: var(--gold-soft);
 }
 
-.reaction-stage > header h2 {
+.reaction-title {
   grid-column: 2;
+  max-width: 1050px;
   margin: 0;
   font-family: var(--display);
-  font-size: clamp(44px, 6vw, 96px);
+  font-size: clamp(44px, 5.2vw, 82px);
   font-weight: 500;
-  line-height: 0.93;
+  line-height: 0.96;
+  text-wrap: balance;
 }
 
 .reaction-collider {
@@ -1502,12 +1504,24 @@ canvas {
     grid-template-columns: 1fr;
   }
 
-  .reaction-stage > header {
+  .reaction-heading {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
-  .reaction-stage > header h2 {
+  .reaction-heading .chapter-index,
+  .reaction-title {
     grid-column: 1;
+  }
+
+  .reaction-heading .chapter-index {
+    margin-top: 0;
+  }
+
+  .reaction-title {
+    max-width: 680px;
+    font-size: clamp(42px, 12.5vw, 60px);
+    line-height: 0.98;
   }
 
   .reaction-collider {
@@ -2665,6 +2679,10 @@ canvas {
   font: 700 11px/1.32 var(--body);
 }
 
+.progression-label-compact {
+  display: none;
+}
+
 .progression-path button:nth-child(1) { top: 4%; left: 50%; transform: translateX(-50%); }
 .progression-path button:nth-child(2) { top: 22%; right: 8%; }
 .progression-path button:nth-child(3) { right: 14%; bottom: 10%; }
@@ -3101,6 +3119,21 @@ canvas {
     font-size: clamp(50px, 14vw, 70px);
   }
 
+  .progression-shell > header {
+    gap: 14px;
+  }
+
+  .progression-shell > header h2 {
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 0.96;
+  }
+
+  .progression-shell > header > p:last-child {
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
   .progression-orbit {
     display: flex;
     min-height: 0;
@@ -3120,22 +3153,24 @@ canvas {
     left: auto;
     order: 2;
     width: 100%;
-    min-height: 280px;
-    margin-top: 14px;
-    border-radius: 0;
+    min-height: 196px;
+    align-items: flex-start;
+    margin-top: 12px;
+    padding: 26px 24px;
+    border-radius: 4px;
+    text-align: left;
     transform: none;
+  }
+
+  .progression-core h3 {
+    margin: 18px 0 10px;
+    font-size: clamp(30px, 9vw, 40px);
   }
 
   .progression-path {
     display: grid;
-    grid-template-columns: repeat(6, minmax(62px, 1fr));
-    gap: 5px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .progression-path::-webkit-scrollbar {
-    display: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .progression-path button,
@@ -3144,16 +3179,24 @@ canvas {
     inset: auto;
     display: grid;
     width: auto;
-    min-width: 68px;
-    min-height: 68px;
+    min-width: 0;
+    min-height: 76px;
     place-items: center;
-    padding: 8px;
+    gap: 7px;
+    padding: 10px 6px;
     text-align: center;
     transform: none;
   }
 
-  .progression-path span {
+  .progression-label-full {
     display: none;
+  }
+
+  .progression-label-compact {
+    display: block;
+    font: 700 9px/1 var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .soundtrack-shell > header > p:last-child {
@@ -4329,6 +4372,39 @@ main > section {
   color: var(--cyan-soft);
 }
 
+.opening-portal-hint {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 9px;
+  justify-self: center;
+  margin-top: 14px;
+  padding: 0 13px;
+  border: 1px solid color-mix(in srgb, var(--portal-accent) 42%, transparent);
+  color: var(--mist-200);
+  background: rgba(3, 6, 12, 0.7);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
+  font: 700 8px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.opening-portal-hint::before {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--portal-accent);
+  border-radius: 50%;
+  content: '';
+  box-shadow: 0 0 10px color-mix(in srgb, var(--portal-accent) 58%, transparent);
+}
+
+.opening-section:not([data-portal-stage='idle']) .opening-portal-hint {
+  border-color: var(--portal-accent);
+  color: var(--mist-100);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--portal-accent) 16%, transparent);
+}
+
 .hero-stage {
   touch-action: pan-y;
 }
@@ -4715,13 +4791,53 @@ main > section {
     padding-block: 78px 28px;
   }
 
+  .progression-shell > header {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .progression-shell > header h2 {
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 0.96;
+  }
+
+  .progression-shell > header > p:last-child {
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
   .progression-orbit {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
     margin-top: 34px;
     padding-block: 24px;
   }
 
   .progression-core {
-    min-height: 238px;
+    width: 100%;
+    min-height: 196px;
+    align-items: flex-start;
+    padding: 26px 24px;
+    text-align: left;
+  }
+
+  .progression-core h3 {
+    margin: 18px 0 10px;
+    font-size: clamp(30px, 9vw, 40px);
+  }
+
+  .progression-path {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .progression-path button,
+  .progression-path button:nth-child(n) {
+    min-height: 76px;
+    gap: 7px;
+    padding: 10px 6px;
   }
 
   .gameplay-showcase {
@@ -4839,6 +4955,23 @@ main > section {
 
   .opening-signals b {
     font-size: 9px;
+  }
+
+  .progression-path {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progression-path button,
+  .progression-path button:nth-child(n) {
+    grid-template-columns: 24px minmax(0, 1fr);
+    min-height: 58px;
+    justify-items: start;
+    padding-inline: 10px;
+    text-align: left;
+  }
+
+  .progression-path svg {
+    width: 19px;
   }
 
   .gameplay-showcase-art {
@@ -5001,32 +5134,6 @@ main > section {
   opacity: calc(0.1 + var(--portal-proximity) * 0.24);
   box-shadow: 0 0 70px color-mix(in srgb, var(--portal-accent) 18%, transparent);
   transition: opacity 220ms ease, box-shadow 220ms ease;
-}
-
-.portal-instruction {
-  position: absolute;
-  bottom: 8%;
-  left: 50%;
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  padding: 0 13px;
-  border: 1px solid color-mix(in srgb, var(--portal-accent) 42%, transparent);
-  color: var(--mist-100);
-  background: rgba(3, 6, 12, 0.78);
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.32);
-  font: 700 9px/1 var(--mono);
-  letter-spacing: 0.16em;
-  opacity: calc(0.08 + var(--portal-proximity) * 0.92);
-  text-transform: uppercase;
-  transform: translateX(-50%);
-  transition: opacity 180ms ease, border-color 180ms ease;
-  white-space: nowrap;
-}
-
-.opening-section:not([data-portal-stage='idle']) .portal-instruction,
-.portal-activator:focus-visible .portal-instruction {
-  opacity: 1;
 }
 
 .opening-section[data-portal-stage='stage-one'] .portal-target-core,
@@ -6008,10 +6115,9 @@ main > section {
     width: min(76vw, 330px);
   }
 
-  .portal-instruction {
-    bottom: 4%;
+  .opening-portal-hint {
+    justify-self: start;
     min-height: 36px;
-    opacity: 0.78;
   }
 
   .opening-primary-media,
@@ -6219,7 +6325,7 @@ main > section {
     width: 220px;
   }
 
-  .portal-instruction {
+  .opening-portal-hint {
     display: none;
   }
 

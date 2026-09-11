@@ -180,8 +180,8 @@ export function OpeningSection() {
       >
         <span className="portal-charge-ring" aria-hidden="true" />
         <span className="portal-target-core" aria-hidden="true" />
-        <span id="portal-instruction" className="portal-instruction">
-          {coarsePointer ? 'Hold to enter' : 'Hold to synchronize'}
+        <span id="portal-instruction" className="sr-only">
+          {coarsePointer ? 'Hold the portal to enter' : 'Hold the portal to synchronize'}
         </span>
         <span className="sr-only" role="progressbar" aria-label="Portal synchronization" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(portal.charge)}>
           {Math.round(portal.charge)} percent charged
@@ -205,6 +205,9 @@ export function OpeningSection() {
           <span><MonitorSmartphone aria-hidden="true" /> Play in browser</span>
           <span><Keyboard aria-hidden="true" /> Keyboard + touch</span>
         </div>
+        <span className="opening-portal-hint" aria-hidden="true">
+          {coarsePointer ? 'Hold portal to enter' : 'Hold portal to synchronize'}
+        </span>
         <div className="opening-actions">
           <a className="button button-primary" href={SITE_LINKS.play.href} target="_blank" rel="noopener noreferrer">
             <Play aria-hidden="true" /> Play now <ExternalLink aria-hidden="true" />

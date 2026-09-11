@@ -14,9 +14,9 @@ export function ReactionsSection() {
   return (
     <section id="elements" className="reactions-section" aria-labelledby="reactions-title" style={style}>
       <div className="reaction-stage page-shell">
-        <header>
+        <header className="reaction-heading">
           <p className="chapter-index">04 / Elemental reactions</p>
-          <h2 id="reactions-title">Two elements enter. The battlefield leaves changed.</h2>
+          <h2 id="reactions-title" className="reaction-title">Two elements enter. The battlefield leaves changed.</h2>
         </header>
 
         <div className="reaction-collider" aria-live="polite">
