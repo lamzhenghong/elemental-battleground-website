@@ -81,16 +81,6 @@ export interface NewsItem {
   image: string;
 }
 
-export type GameplayCategoryId = 'combat' | 'world' | 'bosses' | 'special-ultimates';
-
-export interface GameplayCategory {
-  id: GameplayCategoryId;
-  label: string;
-  description: string;
-  assetPath: string;
-  status: 'awaiting-authentic-capture';
-}
-
 export type MediaCategory = 'World' | 'Characters' | 'Systems';
 
 export interface MediaItem {

@@ -2,10 +2,11 @@ import { act, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { OpeningSection } from '../sections/Opening/OpeningSection';
 import { SpecialUltimatesSection } from '../sections/SpecialUltimates/SpecialUltimatesSection';
+import { renderWithExperience } from './renderWithExperience';
 
 describe('collision-resistant section structure', () => {
   it('keeps the opening scroll cue in normal flow after the CTA row', () => {
-    const { container } = render(<OpeningSection />);
+    const { container } = renderWithExperience(<OpeningSection />);
     const content = container.querySelector<HTMLElement>('.opening-content');
     const actions = container.querySelector<HTMLElement>('.opening-actions');
     const cue = container.querySelector<HTMLElement>('.scroll-cue');
@@ -15,7 +16,7 @@ describe('collision-resistant section structure', () => {
   });
 
   it('makes Play Now primary and states only verified browser capabilities', () => {
-    render(<OpeningSection />);
+    renderWithExperience(<OpeningSection />);
 
     expect(screen.getByRole('link', { name: /Play now/i })).toHaveClass('button-primary');
     expect(screen.getByRole('link', { name: /Explore the world/i })).toHaveClass('button-secondary');
@@ -46,7 +47,7 @@ describe('collision-resistant section structure', () => {
 
     const originalObserver = window.IntersectionObserver;
     window.IntersectionObserver = VisibilityObserver as unknown as typeof IntersectionObserver;
-    const { container, unmount } = render(<OpeningSection />);
+    const { container, unmount } = renderWithExperience(<OpeningSection />);
     const video = container.querySelector('video');
     expect(video).toBeInTheDocument();
     expect(observe).toHaveBeenCalledWith(video);

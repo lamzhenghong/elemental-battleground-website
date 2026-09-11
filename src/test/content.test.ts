@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { GAME_MODES } from '../content/gameModes';
-import { GAMEPLAY_CATEGORIES } from '../content/gameplayMedia';
 import { HEROES } from '../content/heroes';
 import { NEWS_CATEGORIES, NEWS_ITEMS } from '../content/news';
 import { REACTIONS } from '../content/reactions';
@@ -41,12 +40,6 @@ describe('official site content', () => {
     expect(NEWS_ITEMS.map(item => item.date)).toEqual(['2026-09-08', '2026-08-14', '2026-08-12']);
     expect(NEWS_ITEMS.every(item => item.details.length >= 2)).toBe(true);
     expect(NEWS_ITEMS.every(item => item.technicalHref.includes('github.com/lamzhenghong/ELEMENTAL-BATTLEGROUND/commit/'))).toBe(true);
-  });
-
-  it('keeps gameplay media honest until authentic captures are supplied', () => {
-    expect(GAMEPLAY_CATEGORIES.map(item => item.id)).toEqual(['combat', 'world', 'bosses', 'special-ultimates']);
-    expect(GAMEPLAY_CATEGORIES.every(item => item.status === 'awaiting-authentic-capture')).toBe(true);
-    expect(GAMEPLAY_CATEGORIES.every(item => item.assetPath.startsWith('/media/gameplay/'))).toBe(true);
   });
 
   it('builds the media archive entirely from owned local assets', () => {

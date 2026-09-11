@@ -1,16 +1,48 @@
 import { ArrowDown, ExternalLink, Keyboard, MonitorSmartphone, Play, Sparkles } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, type CSSProperties } from 'react';
 import { SITE_LINKS } from '../../content/siteContent';
 import { useGsapContext } from '../../hooks/useGsapContext';
-import { useReducedExperience } from '../../hooks/useReducedExperience';
 import { MediaFallback } from '../../components/MediaFallback';
 import { PortalParticles } from './PortalParticles';
+import { useInteractiveExperience } from '../../interactive/InteractiveExperienceContext';
+import { getPortalChargeStage } from './portalCharge';
+import { usePortalCharge } from './usePortalCharge';
 
 export function OpeningSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { reducedMotion, reducedData, coarsePointer } = useReducedExperience();
+  const transitionTimerRef = useRef<number>(0);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const proximityRef = useRef(0);
+  const experience = useInteractiveExperience();
+  const {
+    selectedElement,
+    setPortalCharge,
+    portalActivated,
+    setPortalActivated,
+    reducedMotion,
+    reducedData,
+    coarsePointer
+  } = experience;
   const effectsReduced = reducedMotion || reducedData;
+  const activatePortal = () => {
+    if (portalActivated) return;
+    setPortalActivated(true);
+    window.clearTimeout(transitionTimerRef.current);
+    transitionTimerRef.current = window.setTimeout(() => {
+      const destination = document.getElementById('resonance');
+      if (!destination) return;
+      window.history.pushState(null, '', '#resonance');
+      destination.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    }, reducedMotion ? 100 : 820);
+  };
+  const publishSharedCharge = useCallback((charge: number) => {
+    if (charge === 0 || charge === 100) setPortalCharge(charge);
+  }, [setPortalCharge]);
+  const portal = usePortalCharge({ onCharge: publishSharedCharge, onActivate: activatePortal });
+  const chargeStage = getPortalChargeStage(portal.charge);
+
+  useEffect(() => () => window.clearTimeout(transitionTimerRef.current), []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -53,7 +85,40 @@ export function OpeningSection() {
   );
 
   return (
-    <section id="overview" ref={sectionRef} className="opening-section" aria-labelledby="opening-title">
+    <section
+      id="overview"
+      ref={sectionRef}
+      className="opening-section"
+      aria-labelledby="opening-title"
+      data-portal-stage={chargeStage}
+      data-portal-active={portalActivated ? 'true' : 'false'}
+      data-motion={effectsReduced ? 'reduced' : 'full'}
+      style={{
+        '--portal-accent': selectedElement.primary,
+        '--portal-accent-secondary': selectedElement.secondary,
+        '--portal-progress': `${portal.charge * 3.6}deg`
+      } as CSSProperties}
+      onPointerMove={event => {
+        if (effectsReduced || coarsePointer) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 2;
+        const y = ((event.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 2;
+        pointerRef.current = { x, y };
+        const distance = Math.hypot(x, y + 0.12);
+        proximityRef.current = Math.max(0, 1 - distance / 0.72);
+        event.currentTarget.style.setProperty('--portal-x', x.toFixed(3));
+        event.currentTarget.style.setProperty('--portal-y', y.toFixed(3));
+        event.currentTarget.style.setProperty('--portal-proximity', proximityRef.current.toFixed(3));
+      }}
+      onPointerLeave={event => {
+        pointerRef.current = { x: 0, y: 0 };
+        proximityRef.current = 0;
+        event.currentTarget.style.setProperty('--portal-x', '0');
+        event.currentTarget.style.setProperty('--portal-y', '0');
+        event.currentTarget.style.setProperty('--portal-proximity', '0');
+        portal.cancel();
+      }}
+    >
       <div className="opening-media" aria-hidden="true">
         <MediaFallback className="opening-primary-media" message="Portal visual unavailable">
           {onError => !reducedData ? (
@@ -75,8 +140,53 @@ export function OpeningSection() {
         </MediaFallback>
         <div className="opening-vignette" />
       </div>
-      <PortalParticles disabled={effectsReduced || coarsePointer} />
+      <PortalParticles
+        disabled={effectsReduced || coarsePointer}
+        primary={selectedElement.primary}
+        secondary={selectedElement.secondary}
+        chargeRef={portal.chargeRef}
+        pointerRef={pointerRef}
+        proximityRef={proximityRef}
+      />
       <div className="portal-halo" aria-hidden="true" />
+      <button
+        type="button"
+        className="portal-activator"
+        aria-label={`Synchronize portal with ${selectedElement.name}`}
+        aria-describedby="portal-instruction"
+        onPointerDown={event => {
+          if (event.pointerType === 'touch') event.preventDefault();
+          event.currentTarget.setPointerCapture?.(event.pointerId);
+          portal.start();
+        }}
+        onPointerUp={event => {
+          event.currentTarget.releasePointerCapture?.(event.pointerId);
+          portal.cancel();
+        }}
+        onPointerCancel={portal.cancel}
+        onContextMenu={event => event.preventDefault()}
+        onKeyDown={event => {
+          if ((event.key === 'Enter' || event.key === ' ') && !event.repeat) {
+            event.preventDefault();
+            portal.start();
+          }
+        }}
+        onKeyUp={event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            portal.cancel();
+          }
+        }}
+      >
+        <span className="portal-charge-ring" aria-hidden="true" />
+        <span className="portal-target-core" aria-hidden="true" />
+        <span id="portal-instruction" className="portal-instruction">
+          {coarsePointer ? 'Hold to enter' : 'Hold to synchronize'}
+        </span>
+        <span className="sr-only" role="progressbar" aria-label="Portal synchronization" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(portal.charge)}>
+          {Math.round(portal.charge)} percent charged
+        </span>
+      </button>
 
       <div className="opening-content page-shell">
         <p className="opening-kicker"><Sparkles aria-hidden="true" /> Official game website</p>

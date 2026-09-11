@@ -1,39 +1,52 @@
-import { Film, ImageOff } from 'lucide-react';
-import { useState } from 'react';
-import { GAMEPLAY_CATEGORIES } from '../../content/gameplayMedia';
-import type { GameplayCategoryId } from '../../types/content';
+import { RotateCcw } from 'lucide-react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+
+function CombatChallengeFallback() {
+  return (
+    <div className="combat-challenge-loading combat-challenge-fallback" role="status">
+      <strong>Combat trial signal interrupted</strong>
+      <span>The field archive is still available below.</span>
+      <button type="button" onClick={() => window.location.reload()}>
+        <RotateCcw aria-hidden="true" /> Retry trial
+      </button>
+    </div>
+  );
+}
+
+const CombatChallenge = lazy(async () => {
+  try {
+    return await import('./CombatChallenge');
+  } catch (error) {
+    if (import.meta.env.DEV) console.warn('Combat challenge failed to load', error);
+    return { default: CombatChallengeFallback };
+  }
+});
 
 export function GameplayShowcase() {
-  const [activeId, setActiveId] = useState<GameplayCategoryId>('combat');
-  const active = GAMEPLAY_CATEGORIES.find(item => item.id === activeId) ?? GAMEPLAY_CATEGORIES[0];
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(() => import.meta.env.MODE === 'test');
+
+  useEffect(() => {
+    if (shouldLoad) return;
+    const observer = typeof IntersectionObserver === 'undefined'
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          if (!entry?.isIntersecting) return;
+          setShouldLoad(true);
+          observer?.disconnect();
+        }, { rootMargin: '700px 0px' });
+    if (rootRef.current) observer?.observe(rootRef.current);
+    else setShouldLoad(true);
+    return () => observer?.disconnect();
+  }, [shouldLoad]);
 
   return (
-    <section className="gameplay-showcase" aria-labelledby="gameplay-showcase-title">
-      <div className="gameplay-showcase-art" aria-hidden="true">
-        <img src="/media/images/world/chapter-10-prime-orbit-core.webp" alt="" loading="lazy" width="1600" height="900" />
-        <span><Film /></span>
-      </div>
-
-      <div className="gameplay-showcase-copy">
-        <p className="gameplay-showcase-kicker"><ImageOff aria-hidden="true" /> Authentic capture pending</p>
-        <h3 id="gameplay-showcase-title">Gameplay showcase coming soon</h3>
-        <p>Authentic gameplay capture has not been supplied, so this stage uses owned world artwork and never presents it as footage.</p>
-
-        <div className="gameplay-showcase-tabs" aria-label="Gameplay showcase categories">
-          {GAMEPLAY_CATEGORIES.map(category => (
-            <button
-              type="button"
-              key={category.id}
-              aria-pressed={active.id === category.id}
-              onClick={() => setActiveId(category.id)}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-
-        <p className="gameplay-showcase-description" aria-live="polite">{active.description}</p>
-      </div>
-    </section>
+    <div ref={rootRef} className="gameplay-showcase">
+      {shouldLoad ? (
+        <Suspense fallback={<div className="combat-challenge-loading" role="status">Preparing combat synchronization trial…</div>}>
+          <CombatChallenge />
+        </Suspense>
+      ) : <div className="combat-challenge-loading" role="status">Combat synchronization trial available below</div>}
+    </div>
   );
 }

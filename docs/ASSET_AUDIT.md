@@ -62,7 +62,7 @@ The published Media chapter reuses nine of the optimized owned images above acro
 
 ## Gameplay Showcase Asset Contract
 
-The Media chapter now includes an asset-ready gameplay stage, but it remains explicitly labeled `Gameplay showcase coming soon` until real captures are supplied. Owned world artwork is used only as atmosphere and is identified as artwork rather than gameplay footage.
+The Media chapter now leads with a lightweight playable `Combat Synchronization Trial`, clearly identified as a website interaction inspired by the game's real mechanics rather than captured gameplay. The owned artwork gallery remains below it. Authentic footage can replace or complement the trial later without changing this distinction.
 
 Recommended future files:
 

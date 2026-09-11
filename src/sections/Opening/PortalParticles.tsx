@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 
 interface Particle {
   x: number;
@@ -12,9 +12,14 @@ interface Particle {
 
 interface PortalParticlesProps {
   disabled: boolean;
+  primary: string;
+  secondary: string;
+  chargeRef: RefObject<number>;
+  pointerRef: RefObject<{ x: number; y: number }>;
+  proximityRef: RefObject<number>;
 }
 
-export function PortalParticles({ disabled }: PortalParticlesProps) {
+export function PortalParticles({ disabled, primary, secondary, chargeRef, pointerRef, proximityRef }: PortalParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -46,7 +51,7 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
         velocity: 0.16 + (index % 5) * 0.05,
         drift: ((index % 7) - 3) * 0.025,
         alpha: 0.18 + (index % 6) * 0.08,
-        hue: index % 3 === 0 ? 44 : index % 3 === 1 ? 193 : 274
+        hue: index % 3
       }));
     };
 
@@ -61,18 +66,28 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
       if (disposed || !inView || !pageVisible) return;
       context.clearRect(0, 0, width, height);
       for (const particle of particles) {
-        particle.y -= particle.velocity;
+        const charge = chargeRef.current ?? 0;
+        const proximity = proximityRef.current ?? 0;
+        const pointer = pointerRef.current ?? { x: 0, y: 0 };
+        const attraction = proximity * (0.12 + charge / 125);
+        const targetX = width * (0.5 + pointer.x * 0.025);
+        const targetY = height * (0.43 + pointer.y * 0.018);
+        particle.x += (targetX - particle.x) * 0.003 * attraction;
+        particle.y += (targetY - particle.y) * 0.003 * attraction;
+        particle.y -= particle.velocity * (1 + charge / 140);
         particle.x += particle.drift;
         if (particle.y < -8) particle.y = height + 8;
         if (particle.x < -8) particle.x = width + 8;
         if (particle.x > width + 8) particle.x = -8;
         context.beginPath();
-        context.fillStyle = `hsla(${particle.hue}, 95%, 70%, ${particle.alpha})`;
-        context.shadowColor = `hsla(${particle.hue}, 95%, 65%, .65)`;
-        context.shadowBlur = 12;
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.globalAlpha = Math.min(0.9, particle.alpha + charge / 320);
+        context.fillStyle = particle.hue === 0 ? primary : particle.hue === 1 ? secondary : '#ffe8a3';
+        context.shadowColor = particle.hue === 0 ? primary : secondary;
+        context.shadowBlur = 10 + charge * 0.08;
+        context.arc(particle.x, particle.y, particle.radius * (1 + charge / 240), 0, Math.PI * 2);
         context.fill();
       }
+      context.globalAlpha = 1;
       frame = window.requestAnimationFrame(draw);
     };
 
@@ -106,7 +121,7 @@ export function PortalParticles({ disabled }: PortalParticlesProps) {
       window.removeEventListener('resize', resize);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [disabled]);
+  }, [chargeRef, disabled, pointerRef, primary, proximityRef, secondary]);
 
   return <canvas ref={canvasRef} className="portal-particles" aria-hidden="true" />;
 }

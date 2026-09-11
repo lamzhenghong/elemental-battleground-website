@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import type { CSSProperties } from 'react';
 import { SiteNavigation } from './components/SiteNavigation';
 import { CinematicLoader } from './components/CinematicLoader';
 import { SiteFooter } from './components/SiteFooter';
@@ -15,17 +15,35 @@ import { SpecialUltimatesSection } from './sections/SpecialUltimates/SpecialUlti
 import { WorldSection } from './sections/World/WorldSection';
 import { NewsSection } from './sections/News/NewsSection';
 import { MediaSection } from './sections/Media/MediaSection';
+import { ElementSelector } from './sections/Opening/ElementSelector';
+import { useInteractiveExperience } from './interactive/InteractiveExperienceContext';
 
 export function App() {
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  const {
+    selectedElement,
+    soundEnabled,
+    setSoundEnabled,
+    toggleSound
+  } = useInteractiveExperience();
+  const resonanceStyle = {
+    '--resonance-primary': selectedElement.primary,
+    '--resonance-secondary': selectedElement.secondary,
+    '--resonance-glow': selectedElement.glow
+  } as CSSProperties;
 
   return (
-    <div className="site-canvas" data-sound={soundEnabled ? 'enabled' : 'muted'}>
+    <div
+      className="site-canvas"
+      data-sound={soundEnabled ? 'enabled' : 'muted'}
+      data-resonance={selectedElement.id}
+      style={resonanceStyle}
+    >
       <CinematicLoader />
       <SkipLink />
-      <SiteNavigation soundEnabled={soundEnabled} onSoundToggle={() => setSoundEnabled(enabled => !enabled)} />
+      <SiteNavigation soundEnabled={soundEnabled} onSoundToggle={toggleSound} />
       <main id="main-content">
         <OpeningSection />
+        <ElementSelector />
         <NewsSection />
         <WorldSection />
         <HeroesSection />

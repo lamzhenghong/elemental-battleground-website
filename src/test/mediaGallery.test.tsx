@@ -1,23 +1,26 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { MediaSection } from '../sections/Media/MediaSection';
+import { renderWithExperience } from './renderWithExperience';
 
 describe('media archive', () => {
-  it('shows an honest gameplay capture stage with useful categories', async () => {
-    const user = userEvent.setup();
-    render(<MediaSection />);
+  it('shows an honest playable website combat trial before the owned media gallery', async () => {
+    renderWithExperience(<MediaSection />);
 
-    expect(screen.getByRole('heading', { name: 'Gameplay showcase coming soon' })).toBeInTheDocument();
-    expect(screen.getByText(/Authentic gameplay capture has not been supplied/)).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: 'Bosses' }));
-    expect(screen.getByText('Distinct boss silhouettes, mechanics, telegraphs, and counterplay.')).toBeInTheDocument();
+    expect(await screen.findByRole(
+      'heading',
+      { name: 'Combat Synchronization Trial' },
+      { timeout: 5_000 }
+    )).toBeInTheDocument();
+    expect(screen.getByText(/not gameplay footage/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start trial/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open Whispering Ruins media' })).toBeInTheDocument();
   });
 
   it('opens, advances, and closes its lightbox with the keyboard', async () => {
     const user = userEvent.setup();
-    render(<MediaSection />);
+    renderWithExperience(<MediaSection />);
 
     const opener = screen.getByRole('button', { name: 'Open Whispering Ruins media' });
     await user.click(opener);
@@ -39,7 +42,7 @@ describe('media archive', () => {
 
   it('advances the lightbox with a horizontal swipe', async () => {
     const user = userEvent.setup();
-    render(<MediaSection />);
+    renderWithExperience(<MediaSection />);
 
     await user.click(screen.getByRole('button', { name: 'Open Whispering Ruins media' }));
     const dialog = screen.getByRole('dialog', { name: 'Whispering Ruins' });

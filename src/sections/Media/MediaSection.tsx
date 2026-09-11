@@ -74,7 +74,7 @@ export function MediaSection() {
         <header>
           <p className="chapter-index">09 / Field archive</p>
           <h2 id="media-title">Aetheria, frame by frame.</h2>
-          <p>Explore owned artwork from the world, its heroes, and the systems that shape every build.</p>
+          <p>Enter the interactive combat trial, then explore owned artwork from the world, its heroes, and its systems.</p>
         </header>
 
         <GameplayShowcase />

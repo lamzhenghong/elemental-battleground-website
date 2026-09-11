@@ -13,6 +13,9 @@
   --gold-soft: #ffe8a3;
   --violet: #9d67ff;
   --danger: #ff536f;
+  --resonance-primary: #ff6a32;
+  --resonance-secondary: #ffc046;
+  --resonance-glow: rgba(255, 91, 42, 0.42);
   --line: rgba(157, 184, 220, 0.18);
   --line-strong: rgba(157, 206, 255, 0.36);
   --page: min(1540px, calc(100vw - clamp(32px, 7vw, 132px)));
